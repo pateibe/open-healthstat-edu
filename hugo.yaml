@@ -1,0 +1,51 @@
+baseURL: https://example.org/
+languageCode: en-us
+title: Angewandte Statistik für Gesundheitsprofessionen
+module:
+  imports:
+    - path: github.com/imfing/hextra
+
+menu:
+  main:
+    - name: BSc
+      pageRef: /bsc
+      weight: 1
+    - name: MSc
+      pageRef: /msc
+      weight: 2
+    - name: Blog
+      pageRef: /blog
+      weight: 3
+    - name: FAQ
+      pageRef: /faq
+      weight: 4
+    - name: About
+      pageRef: /about
+      weight: 5
+    - name: Search
+      weight: 6
+      params:
+        type: search
+    - name: GitHub
+      weight: 7
+      url: "https://github.com/pateibe/statedu"
+      params:
+        icon: github
+
+params:
+  description: Offene Bildungsressourcen zur angewandten Statistik für Gesundheitsprofessionen
+
+  navbar:
+    displayTitle: true
+    displayLogo: true
+    logo:
+      path: images/noun-education-7748430.svg
+      dark: images/noun-education-7748430-dark.svg
+      link: /
+      width: 40
+      height: 20
+
+  theme:
+    # light | dark | system
+    default: system
+    displayToggle: true

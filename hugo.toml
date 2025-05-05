@@ -1,7 +1,0 @@
-baseURL = 'https://github.com/pateibe/statedu'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
-theme = 'ananke'
-[caches]
-  [caches.images]
-    dir = ':cacheDir/images'
