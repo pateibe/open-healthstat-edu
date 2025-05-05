@@ -1,9 +1,51 @@
-baseURL: https://example.org/
+baseURL: "https://example.com/"
 languageCode: en-us
-title: Angewandte Statistik für Gesundheitsprofessionen
+title: Open HealthStat Edu
+
+enableRobotsTXT: true
+# Parse Git commit
+enableGitInfo: true
+# enableEmoji: false
+hasCJKLanguage: true
+
+# services:
+#   googleAnalytics:
+#     ID: G-MEASUREMENT_ID
+
+outputs:
+  home: [HTML]
+  page: [HTML]
+  section: [HTML, RSS]
+
+defaultContentLanguage: de
+# languages:
+#   de:
+#     languageName: Deutsch
+#     weight: 1
+#     title: Open HealthStat Edu
+  # en:
+  #   languageName: English
+  #   weight: 2
+  #   title: Open HealthStat Edu
+
 module:
   imports:
     - path: github.com/imfing/hextra
+
+markup:
+  highlight:
+    noClasses: false
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        delimiters:
+          block: [['\[', '\]'], ['$$', '$$']]
+          inline: [['\(', '\)']]
+        enable: true
+
+enableInlineShortcodes: true
 
 menu:
   main:
@@ -28,7 +70,7 @@ menu:
         type: search
     - name: GitHub
       weight: 7
-      url: "https://github.com/pateibe/statedu"
+      url: "https://github.com/pateibe/open-healthstat-edu"
       params:
         icon: github
 
@@ -41,11 +83,27 @@ params:
     logo:
       path: images/noun-education-7748430.svg
       dark: images/noun-education-7748430-dark.svg
-      link: /
+      # link: /
       width: 40
       height: 20
+    # width: wide
 
   theme:
     # light | dark | system
     default: system
     displayToggle: true
+
+  footer:
+      enable: true
+      displayCopyright: true
+      displayPoweredBy: true
+      width: normal
+
+  blog:
+    list:
+      displayTags: true
+      # date | lastmod | publishDate | title | weight
+      sortBy: date
+      sortOrder: desc # or "asc"
+    article:
+      displayPagination: true
