@@ -1,0 +1,299 @@
+---
+title: "Intro ggplot"
+author: Patric Eichelberger
+---
+
+## Autor
+
+Patric Eichelberger, [patric.eichelberger@bfh.ch](mailto:patric.eichelberger@bfh.ch)
+
+## Init
+
+```{r}
+library(tidyverse)
+library(plotly)
+library(data.table) # provides fread()
+```
+
+## Import hip data set
+
+```{r}
+filepath <- file.path("HipData.csv")
+df <- fread(filepath)
+head(df)
+```
+
+## Box plots to summarise data
+
+Using R-base plotting:
+
+```{r}
+label = c("INNEN Flex", "AUSSEN Flex", "INNEN Ext", "AUSSEN Ext")
+boxplot(df$HipRot_INNEN_Flexion,
+        df$HipRot_AUSSEN_Flexion,
+        df$HipRot_INNEN_Extension,
+        df$HipRot_AUSSEN_Extension,
+        names = label,
+        ylab = "Hip rotation (deg)")
+
+```
+
+To achieve something similar with ggplot:
+
+```{r}
+ggplot(data = df, aes(y = HipRot_INNEN_Flexion)) +
+  geom_boxplot()
+```
+
+The problem is, that we would need to make four separate plots, since we can only provide one y-axis variable to ggplot. This is far away from convienient.
+
+To use the strengts of ggplot, we need to make data tidy. E.g. we want want on row per observation in the data set. We make grouping variables for the suffixes in the variable names.
+
+-   Direction: AUSSEN/INNEN
+-   ASTE (Ausgangsstellung): Flexion/Extension
+
+Don't do that by hand and instead use the `pivot_longer` function from the `tidyr` package, which is part of the `tidyverse` package (https://tidyverse.tidyverse.org/), a package for data science in R. `tidyverse` contains the data science packages
+
+-   [ggplot2](https://ggplot2.tidyverse.org/), for data visualisation.
+-   [dplyr](https://dplyr.tidyverse.org/), for data manipulation.
+-   [tidyr](https://tidyr.tidyverse.org/), for data tidying.
+-   [readr](https://readr.tidyverse.org/), for data import.
+-   [purrr](https://purrr.tidyverse.org/), for functional programming.
+-   [tibble](https://tibble.tidyverse.org/), for tibbles, a modern re-imagining of data frames.
+-   [stringr](https://stringr.tidyverse.org/), for strings.
+-   [forcats](https://forcats.tidyverse.org/), for factors.
+-   [lubridate](https://lubridate.tidyverse.org/), for date/times.
+
+For each of those packages, there are cheatsheets to easy the daily use. Very helpful to learn how to work with those packages is the book R for Data Science (2e) from Hadley Wickham et al. available at <https://r4ds.hadley.nz/>.
+
+```{r}
+dflong <- df %>% pivot_longer(
+  cols = -c("ID"),
+  names_to = c(".value", "Direction", "ASTE"),
+  names_pattern = ("(.*)_(.*)_(.*)")
+)
+dflong$Direction <- as_factor(dflong$Direction)
+dflong$ASTE <- as_factor(dflong$ASTE)
+head(dflong)
+str(dflong)
+```
+
+Create the boxplots with ggplot. ggplot follows a layered approach:
+
+```         
+graph = data + coordinate system + plot
+```
+
+The following just creates an axes without plotting anything.
+
+```{r}
+ggplot(data = dflong, aes(x = Direction, y = HipRot))
+```
+
+We need to tell ggplot to make box plots out from the provided data
+
+```{r}
+ggplot(data = dflong, aes(x = Direction, y = HipRot)) +
+geom_boxplot()
+```
+
+The problem is now that we collapsed the ASTEs in those two boxplots. An approach is to input only a data frame with either Flexion or Extension data an make separate figures. To select a subset of rows in a data frame, we use here `filter()` from the `dplyr` package.
+
+```{r}
+dfp <- filter(dflong, ASTE == "Flexion")
+ggplot(data = dfp, aes(x = Direction, y = HipRot)) +
+  geom_boxplot()
+```
+
+REMARK about piping operations: Instead of first allocating a sub-dataset to a variable we can achieve the same with less typing when using the piping operator `%>%`:
+
+```{r}
+dflong %>% 
+  filter(ASTE == "Flexion") %>%
+  ggplot(aes(x = Direction, y = HipRot)) +
+  geom_boxplot()
+
+dflong %>% 
+  filter(ASTE == "Extension") %>%
+  ggplot(aes(x = Direction, y = HipRot)) +
+  geom_boxplot()
+```
+
+We now generated two separate figures for the two ASTEs. However, this is still not very convenient, since we repeat our code and we don't have the same y-axis limits to compare the data summaries. This is where the strengths of ggplot come into play. First, lets differentiate the ASTEs by different colors:
+
+```{r}
+dflong %>% 
+  ggplot(aes(x = Direction, y = HipRot, color = ASTE)) +
+  geom_boxplot()
+```
+
+We could also plot into separate axes in subfigures using `facet_wrap` or `facet_grid`. However, that this works we need to take care that the grouping variables are of the type factor.
+
+```{r}
+dflong %>% 
+  ggplot(aes(x = Direction, y = HipRot)) +
+  geom_boxplot() +
+  facet_wrap(vars(ASTE))
+```
+
+We could also wrap the variable `Direction`:
+
+```{r}
+dflong %>% 
+  ggplot(aes(y = HipRot)) +
+  geom_boxplot() +
+  facet_grid(rows = vars(Direction), cols = vars(ASTE))
+```
+
+We might also add single data points to the boxplot
+
+```{r}
+dflong %>% 
+  ggplot(aes(x = Direction, y = HipRot)) +
+  geom_boxplot() +
+  geom_point(
+    position = position_jitter(width = 0.2), # add jitter for better visibility
+    size = 2) +
+  facet_wrap(vars(ASTE))
+```
+
+## Dot plots with summary statistics
+
+We need first to compute the summary statistics we want to add to the plot.
+
+```{r}
+means <- dflong %>%
+  group_by(Direction, ASTE) %>%
+  summarise_if(is.numeric, mean, na.rm = T) # calculate means
+sds <- dflong %>%
+  group_by(Direction, ASTE) %>%
+  summarise_if(is.numeric, list(sd = sd), na.rm = T) # calculate standard deviations
+summary_stats <- left_join(means, sds) # join into summary data frame
+
+dflong %>% 
+  ggplot(aes(x = Direction, y = HipRot)) +
+  geom_point(
+    position = position_jitter(width = 0.2), # add jitter for better visibility
+    size = 2) +
+  geom_errorbar(
+    data = summary_stats,
+    aes(x = Direction,
+        ymin = HipRot - sd,
+        ymax = HipRot + sd),
+    width = 0.2
+  ) +
+  geom_point(
+    data = summary_stats,
+    aes(x = Direction, y = HipRot),
+    color = "red",
+    size = 3
+  ) +
+  facet_wrap(vars(ASTE))
+```
+
+### Error in ChatGPT code
+
+Side mark: ChatGPT proposal produces an error when trying to plot the error bar. Seemingly, the y-variable must be named the same in the global data frame provided to ggplot and in the summary data frame.
+
+```{r}
+# Create a sample dataset (replace this with your own data)
+set.seed(123)
+data <- data.frame(
+  Group = rep(c("A", "B", "C"), each = 30),
+  Value = c(rnorm(30, mean = 20, sd = 5),
+            rnorm(30, mean = 25, sd = 5),
+            rnorm(30, mean = 18, sd = 4))
+)
+
+# Calculate mean and standard deviation for each group
+summary_stats <- data %>%
+  group_by(Group) %>%
+  summarise(
+    Mean = mean(Value),
+    SD = sd(Value)
+  )
+
+# Create the dot plot
+ggplot(data = data, aes(x = Group, y = Value)) +
+  geom_point(position = position_jitter(width = 0.2), size = 2) +  # Add jitter for better visibility
+  ############ produces error ##############
+  # geom_errorbar(
+  #   data = summary_stats,
+  #   aes(x = Group, ymin = Mean - SD, ymax = Mean + SD),
+  #   width = 0.2
+  # ) +
+  ##########################################
+  geom_point(
+    data = summary_stats,
+    aes(x = Group, y = Mean),
+    color = "red",
+    size = 3
+  ) +
+  labs(title = "Dot Plot with Mean and SD") +
+  theme_minimal()
+```
+
+## Scatter plots and linear models
+
+We like to look at the relation between hip internal rotation in flexion and extension. A linear model can directly be added to the plot by `geom_smooth()`.
+
+```{r}
+ggplot(df, aes(x = HipRot_INNEN_Flexion, y = HipRot_INNEN_Extension)) +
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(x = "Hip int rot flexion (deg)", y = "Hip int rot extension (deg)")
+# ggsave("output/Hip_IntFlex_vs_IntExt.png",
+#        width = 10, height = 10 , units = "cm")
+# ggsave("output/Hip_IntFlex_vs_IntExt.eps", device = cairo_ps,
+#        width = 10, height = 10 , units = "cm")
+```
+
+We might also like to add prediction intervals. For that we need the linear model and calculate the prediction errors first.
+
+```{r}
+mdl <- lm(HipRot_INNEN_Extension ~ HipRot_INNEN_Flexion, data = df)
+print(mdl)
+summary(mdl)
+summarydf <- summary(mdl)
+coeffci <- confint(mdl)
+
+newx <- seq(min(df$HipRot_INNEN_Flexion, na.rm = TRUE),
+            max(df$HipRot_INNEN_Flexion, na.rm = TRUE),
+            by = 0.1)
+predint <- predict(mdl,
+                   newdata = data.frame(HipRot_INNEN_Flexion = newx),
+                   interval = "prediction")
+predint <- as_tibble(predint)
+predint$newx <- newx
+ggplot(df, aes(x = HipRot_INNEN_Flexion, y = HipRot_INNEN_Extension)) +
+  geom_point() +
+  geom_smooth(method=lm) +
+  geom_line(aes(x = newx, y = lwr), predint, color = "red", linetype = "dashed") +
+  geom_line(aes(x = newx, y = upr), predint, color = "red", linetype = "dashed") +
+  labs(x = "Hip int rot flexion (deg)", y = "Hip int rot extension (deg)")
+# ggsave("output/Hip_IntFlex_vs_IntExt_predict.png",
+#        width = 10, height = 10 , units = "cm")
+# ggsave("output/Hip_IntFlex_vs_IntExt_predict.eps", device = cairo_ps,
+#        width = 10, height = 10 , units = "cm")
+```
+
+## Further data exploration
+
+We might need to identify IDs in the visualisation. This can be achieved by coloring the ID during plotting. For better visibility we only choose a subset of the data.
+
+```{r}
+df %>% filter(ID == "hip1" | ID == "hip2" | ID == "hip3") %>%
+ggplot(aes(x = HipRot_INNEN_Flexion, y = HipRot_INNEN_Extension, color = ID)) +
+  geom_point() +
+  labs(x = "Hip int rot flexion (deg)", y = "Hip int rot extension (deg)")
+```
+
+For further exploration we could add interactivity to the plot by `ggplotly`
+
+```{r}
+p <- df %>% filter(ID == "hip1" | ID == "hip2" | ID == "hip3") %>%
+ggplot(aes(x = HipRot_INNEN_Flexion, y = HipRot_INNEN_Extension, color = ID)) +
+  geom_point() +
+  labs(x = "Hip int rot flexion (deg)", y = "Hip int rot extension (deg)")
+ggplotly(p)
+```

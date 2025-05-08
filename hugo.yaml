@@ -12,10 +12,10 @@ hasCJKLanguage: true
 #   googleAnalytics:
 #     ID: G-MEASUREMENT_ID
 
-outputs:
-  home: [HTML]
-  page: [HTML]
-  section: [HTML, RSS]
+# outputs:
+#   home: [HTML]
+#   page: [HTML]
+#   section: [HTML, RSS]
 
 defaultContentLanguage: de
 # languages:
@@ -49,27 +49,35 @@ enableInlineShortcodes: true
 
 menu:
   main:
-    - name: BSc
-      pageRef: /bsc
+    - identifier: book
+      name: Buch
+      url: https://lukasstammler.github.io/statbook/
       weight: 1
+    - identifier: bsc
+      name: BSc
+      pageRef: /bsc
+      weight: 2
     - name: MSc
       pageRef: /msc
-      weight: 2
+      weight: 3
+    - name: Kolloq
+      pageRef: /kolloq
+      weight: 4
     - name: Blog
       pageRef: /blog
-      weight: 3
-    - name: FAQ
-      pageRef: /faq
-      weight: 4
+      weight: 5
+    # - name: FAQ
+    #   pageRef: /faq
+    #   weight: 5
     - name: About
       pageRef: /about
-      weight: 5
-    - name: Search
       weight: 6
+    - name: Search
+      weight: 7
       params:
         type: search
     - name: GitHub
-      weight: 7
+      weight: 8
       url: "https://github.com/pateibe/open-healthstat-edu"
       params:
         icon: github
@@ -82,11 +90,17 @@ params:
     displayLogo: true
     logo:
       path: images/noun-education-7748430.svg
+      # path: images/undraw_books_wxzz.svg
       dark: images/noun-education-7748430-dark.svg
+      # dark: images/undraw_books_wxzz.svg
       # link: /
       width: 40
       height: 20
-    # width: wide
+    width: wide
+
+  page:
+    # full (100%), wide (90rem), normal (1280px)
+    width: normal
 
   theme:
     # light | dark | system
@@ -96,8 +110,29 @@ params:
   footer:
       enable: true
       displayCopyright: true
-      displayPoweredBy: true
+      displayPoweredBy: false
       width: normal
+
+  # Display the last modification date
+  displayUpdatedDate: true
+  dateFormat: "January 2, 2006"
+
+  # Search
+  # flexsearch is enabled by default
+  search:
+    enable: true
+    type: flexsearch
+
+    flexsearch:
+      # index page by: content | summary | heading | title
+      index: content
+      # full | forward | reverse | strict
+      # https://github.com/nextapps-de/flexsearch/#tokenizer-prefix-search
+      tokenize: forward
+
+  editURL:
+    enable: true
+    base: "https://github.com/imfing/hextra/edit/main/exampleSite/content"
 
   blog:
     list:
@@ -105,5 +140,33 @@ params:
       # date | lastmod | publishDate | title | weight
       sortBy: date
       sortOrder: desc # or "asc"
+
     article:
       displayPagination: true
+
+  highlight:
+    copy:
+      enable: true
+      # hover | always
+      display: hover
+
+  comments:
+    enable: false
+    type: giscus
+
+    # https://giscus.app/
+    giscus:
+      repo: imfing/hextra
+      repoId: R_kgDOJ9fJag
+      category: General
+      categoryId: DIC_kwDOJ9fJas4CY7gW
+      # mapping: pathname
+      # strict: 0
+      # reactionsEnabled: 1
+      # emitMetadata: 0
+      # inputPosition: top
+      # lang: en
+      # theme: noborder_dark
+
+# For Quarto
+excludeFiles: [ "\\.qmd$", "\\.ipynb$", "\\.py$" ]

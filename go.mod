@@ -1,4 +1,4 @@
-module github.com/pateibe/statedu
+module github.com/pateibe/open-healthstat-edu
 
 go 1.24.2
 
