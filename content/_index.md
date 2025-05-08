@@ -35,4 +35,3 @@ Die Plattform Open HealthStat Edu entsteht an der Berner Fachhochschule und stel
   {{< card link="kolloq" title="Statistik Kolloqium" icon="user-group" >}}
   {{< card link="blog" title="Blog" icon="rss" >}}
 {{< /cards >}}
-

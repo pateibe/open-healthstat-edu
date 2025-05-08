@@ -1,4 +1,4 @@
-baseURL: "https://example.com/"
+baseURL: "https://pateibe.github.io/open-healthstat-edu/"
 languageCode: en-us
 title: Open HealthStat Edu
 
@@ -132,7 +132,7 @@ params:
 
   editURL:
     enable: true
-    base: "https://github.com/imfing/hextra/edit/main/exampleSite/content"
+    base: "https://github.com/pateibe/open-healthstat-edu"
 
   blog:
     list:

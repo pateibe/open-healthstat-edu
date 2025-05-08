@@ -1,6 +1,6 @@
 ---
 title: "Intro ggplot"
-author: Patric Eichelberger
+weight: 3
 ---
 
 ## Autor

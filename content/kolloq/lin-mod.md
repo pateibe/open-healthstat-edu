@@ -1,5 +1,6 @@
 ---
 title: 'Intro Linear Model'
+weight: 1
 ---
 
 ## Intro Linear Model
