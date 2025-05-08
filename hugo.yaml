@@ -1,4 +1,5 @@
 baseURL: "https://pateibe.github.io/open-healthstat-edu/"
+# baseURL: "https://example.com/"
 languageCode: en-us
 title: Open HealthStat Edu
 

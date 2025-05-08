@@ -4,7 +4,7 @@ toc: false
 ---
 
 {{< figure
-  src="/images/undraw_visual-data_3ghp.svg"
+  src="undraw_visual-data_3ghp.svg"
   width=400
 >}}
 

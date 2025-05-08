@@ -9,6 +9,6 @@ weight: 1
 
 ### Ressourcen
 
-<a href="/downloads/LinRegShiny.R" download>Linreg Shiny App</a>
+<a href="/open-healthstat-edu/downloads/LinRegShiny.R" download>Linreg Shiny App</a>
 
-<a href="/downloads/ttestShiny.R" download>ttest Shiny App</a>
+<a href="/open-healthstat-edu/downloads/ttestShiny.R" download>ttest Shiny App</a>
