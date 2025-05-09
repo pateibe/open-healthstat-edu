@@ -1,0 +1,349 @@
+---
+title: "Übung: Deskriptive Statistik in R"
+# weight: 8
+math: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE) # to avoid unnessecary text
+knitr::opts_chunk$set(error = FALSE) # to avoid unnessecary text
+knitr::opts_chunk$set(message = FALSE) # to avoid unnessecary text
+```
+
+## Generelles zu den Übungen
+
+-   Niemand kann alle R-Funktionen auswendig. Daher ist es ganz normal, dass man spickt (z.B. [R-Cheat Sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/base-r.pdf) oder in den Skripten zu den Workshops).\
+-   Alle Aufgaben sind mit den Codes aus den R-Workshops lösbar.\
+-   Wenn du eine Aufgabe nicht auf Anhieb lösen kannst, versuche dir zuerst Hilfe im Internet oder den Unterrichtsmaterialen zu holen. Schaue die Lösung erst an, wenn du mit Google und co. wirklich nicht weiter kommst.\
+-   Fragen zu den Übungen bitte im Forum auf Moodle posten und entsprechend verlinken.
+
+------------------------------------------------------------------------
+
+## 1: Datensatz einlesen {.tabset}
+
+### Aufgabe
+
+Für diese Übung brauchst du wieder die Datei `caerphilly.csv`, welche du auf Moodle findest. Lade den Datensatz herunter und speichere ihn ab. Definiere danach deine Working directory entsprechend und importiere den Datensatz in `R`.
+
+------------------------------------------------------------------------
+
+### Lösung
+
+Der Datenimport ist am einfachsten mit `library(rio)`. Beachte, dass der Name zwischen den beiden " " **identisch** mit jenem der Datei auf deinem Rechner sein muss. Die Working directory muss natürlich auch korrekt definiert sein.
+
+```{r}
+
+library(rio)
+df.cp <- import("caerphilly.csv") # Diese wd() sieht bei dir natürlich anders aus
+```
+
+------------------------------------------------------------------------
+
+### Codebook
+
+Folgende Variablen sind im Datensatz enthalten:
+
+-   `mi` = Myocardial infarction (0 = No, 1 = Yes)
+-   `socclass` = Soziale Klasse mit den Levels I, II, IIIM, IIINM, IV, V
+-   `diabetes` = Diabetes mit den Levels No/uncertain oder Yes
+-   `smoking` = Raucherstatus mit den Levels `Never smoked`, `Ex 1-4 years`, `Ex>5 years`, `<15 per day`, `>15 per day`
+-   `totchol` = Totales Cholesterin
+-   `hdlchol` = High-Density-Lipoprotein-Cholesterin
+-   `bmi` = Body Mass Index
+-   `bmicat` = Body Mass Indes mit den Levels Underweight, Normal, Overweight, Obese
+
+------------------------------------------------------------------------
+
+## 2: Datensatz anschauen {.tabset}
+
+### Aufgaben
+
+1.  Nutze einen einfachen Befehl um zu kontrollieren, ob die Daten richtig eingelesen wurden.
+2.  Wie viele Zeilen und Spalten hat der Datensatz? Was repräsentieren die Zeilen und die Spalten?
+3.  Schau dir die 6. Zeile des Datensatzes an.
+4.  Schau dir die 5. Spalte des Datensatzes an.
+5.  Schau dir die Variable `totchol` an.
+6.  Welchen totchol-Wert hat die 12. Person?
+
+### Lösungen
+
+1.  Nutze einen einfachen Befehl, um zu kontrollieren, ob die Daten richtig eingelesen wurden.
+
+Es gibt verschiedene Möglichkeiten, dies zu tun. Du kannst im Global Environment (oben rechts) auf das kleine Tabellensymbol hinter dem neu erstellten Objekt klicken. Dann öffnet sich eine Tabelle und du hast quasi eine Excel-Ansicht. Mit `str()` siehst du die einzelnen Variablen, die jeweilige Datenklasse sowie die ersten Werte. Mit `head()` siehst du die ersten 6 Zeilen des Datensatzes.
+
+```{r}
+str(df.cp)
+head(df.cp)
+```
+
+------------------------------------------------------------------------
+
+2.  Wie viele Zeilen und Spalten hat der Datensatz? Was repräsentieren die Zeilen und die Spalten?
+
+```{r}
+nrow(df.cp)
+ncol(df.cp)
+```
+
+Jede Zeile steht für eine Beobachtungseinheit und jede Spalte für eine Variable.
+
+------------------------------------------------------------------------
+
+3.  Schau dir die 6. Zeile des Datensatzes an.\
+
+```{r}
+df.cp[6, ]
+```
+
+------------------------------------------------------------------------
+
+4.  Schau dir die 5. Spalte des Datensatzes an.\
+    Da es viele Werte sind, musst du etwas scrollen...
+
+```{r}
+df.cp[ ,5]
+```
+
+------------------------------------------------------------------------
+
+5.  Schau dir die Variable `totchol` an.
+
+Da es viele Werte sind, musst du etwas scrollen...
+
+```{r}
+df.cp$totchol
+```
+
+------------------------------------------------------------------------
+
+6.  Welchen totchol-Wert hat die 12. Person?\
+
+```{r}
+df.cp$totchol[12]
+```
+
+------------------------------------------------------------------------
+
+## 3: Erstellen neuer Variablen {.tabset}
+
+### Aufgaben
+
+1.  Was ist der relative Anteil des HDL Cholesterins am totalen Cholesterin? Speichere das Resultat in einer neuen Variable mit dem Namen `hdlchol_rel`. Füge die Variable anschliessend dem Datensatz hinzu.\
+2.  Was ist der grösste und der kleinste Wert der Variable `hdlchol_rel`?
+
+### Lösung
+
+1.  Die Berechnung kann auf ganze Vektoren angewendet werden. Das Resultat wird dann in einem neuen Objekt abgespeichert und anschliessend dem Datensatz hinzugefügt.
+
+```{r}
+hdlchol_rel <- df.cp$hdlchol / df.cp$totchol # neue Variable berechnen
+df.cp$hdlchol_rel <- hdlchol_rel # neue Variable hinzufügen
+df.cp$hdlchol_rel <- df.cp$hdlchol / df.cp$totchol # Die beiden oberen Schritte kombiniert ;-)
+```
+
+------------------------------------------------------------------------
+
+2.  Was ist der grösste und der kleinste Wert der Variable `hdlchol_rel`?\
+
+```{r}
+max(df.cp$hdlchol_rel)
+min(df.cp$hdlchol_rel)
+```
+
+------------------------------------------------------------------------
+
+## 4: Häufigkeitsverteilungen {.tabset}
+
+### Aufgaben
+
+1.  Stelle die Verteilung der Variable `hdlchol_rel` als Histogramm dar.\
+2.  Stelle die Verteilung der Variable `hdlchol_rel` als Boxplot dar.\
+3.  Wie viele Personen hatten einen Herzinfarkt (Variable `mi`)?
+4.  Aktuell ist die Variable `mi` nicht als Faktor hinterlegt sondern mit 0 und 1 codiert. Mache aus der Variable einen Faktor mit den Ausprägungsgeraden `No` und `Yes`. Wie viele Personen haben ein `No`?\
+5.  Visualisiere die Häufigkeitsverteilung der Herzinfarkte mit einem Balkendiagramm.
+6.  Wie ist die relative Verteilung der Variable `smoking`?
+
+### Lösungen
+
+1.  Stelle die Verteilung der Variable `hdlchol_rel` als Histogramm dar.
+
+```{r}
+hist(df.cp$hdlchol_rel)
+```
+
+------------------------------------------------------------------------
+
+2.  Stelle die Verteilung der Variable `hdlchol_rel` als Boxplot dar.\
+
+```{r}
+boxplot(df.cp$hdlchol_rel) # mit range = 0 werden die Ausreisser nicht separat dargestellt
+```
+
+------------------------------------------------------------------------
+
+3.  Wie viele Personen hatten einen Herzinfarkt (Variable `mi`)?
+
+```{r}
+table(df.cp$mi)
+```
+
+------------------------------------------------------------------------
+
+4.  Aktuell ist die Variable `mi` nicht als Faktor hinterlegt sondern mit 0 und 1 codiert. Mache aus der Variable einen Faktor mit den Ausprägungsgeraden `No` und `Yes`. Wie viele Personen haben ein `No`?
+
+Beachte, dass jetzt oben `No` und `Yes` steht und nicht mehr 0 und 1. Dies aufgrund der Umwandlung in einen Faktor.
+
+```{r}
+df.cp$mi <- factor(df.cp$mi, levels = c(0,1), labels = c("No", "Yes"))
+table(df.cp$mi)
+```
+
+------------------------------------------------------------------------
+
+5.  Visualisiere die Häufigkeitsverteilung der Herzinfarkte mit einem Balkendiagramm.
+
+```{r}
+barplot(table(df.cp$mi))
+```
+
+------------------------------------------------------------------------
+
+6.  Wie ist die relative Verteilung der Variable `smoking`?
+
+```{r}
+table(df.cp$smoking)/sum(table(df.cp$smoking)) # das n wird hier als Summe aller Kategorien berechnet
+```
+
+------------------------------------------------------------------------
+
+## 5: Masse der Lage und Masse der Streuung {.tabset}
+
+### Aufgaben
+
+1.  Was ist der durchschnittliche Body Mass Index?
+2.  Unterscheiden sich Mittelwert und Median des BMI's?\
+3.  Lass dir die Quartile des BMI's anzeigen.\
+4.  Was ist das 95. Quantil des BMI's?\
+5.  Wie gross ist die Standardabweichung für die Variable BMI?\
+6.  Berechne die Standardabweichung ohne die Funktion `sd()`\
+7.  Stimmt es, dass $Varianz = Standardabweichung^2$ ?
+
+### Lösungen
+
+1.  Was ist der durchschnittliche Body Mass Index?\
+
+```{r}
+mean(df.cp$bmi, na.rm = TRUE) # Das na.rm = TRUE braucht man, wenn es fehlende Werte im Datensatz hat
+```
+
+------------------------------------------------------------------------
+
+2.  Unterscheiden sich Mittelwert und Median des BMI's?
+
+ja, um 0.09077536
+
+```{r}
+mean(df.cp$bmi, na.rm = TRUE) - median(df.cp$bmi, na.rm = TRUE)
+```
+
+------------------------------------------------------------------------
+
+3.  Lass dir die Quartile des BMI's anzeigen.
+
+```{r}
+quantile(df.cp$bmi, probs = c(0,0.25, 0.5, 0.75,1))
+```
+
+------------------------------------------------------------------------
+
+4.  Was ist das 95. Quantil des BMI's?\
+
+```{r}
+quantile(df.cp$bmi, probs = .95)
+```
+
+------------------------------------------------------------------------
+
+5.  Wie gross ist die Standardabweichung für die Variable BMI?
+
+```{r}
+sd(df.cp$bmi, na.rm = TRUE)
+```
+
+------------------------------------------------------------------------
+
+6.  Berechne die Standardabweichung ohne die Funktion `sd()`
+
+```{r}
+n <- nrow(df.cp)
+mittelwert <- mean(df.cp$bmi, na.rm = TRUE)
+diff <- df.cp$bmi - mittelwert
+Varianz <- sum(diff^2)/(n-1)
+Standardabweichung <- sqrt(Varianz)
+Standardabweichung
+```
+
+------------------------------------------------------------------------
+
+7.  Stimmt es, dass $Varianz = Standardabweichung^2$ ?
+
+Ja, das stimmt: 
+
+```{r}
+var(df.cp$bmi, na.rm = TRUE)
+sd(df.cp$bmi, na.rm = TRUE)^2
+```
+
+------------------------------------------------------------------------
+
+## 6: Masse der Lage und Masse der Streuung {.tabset}
+
+### Aufgabe
+
+Wiederhole die Schritte 1 bis 5 von Aufgabe 5, jedoch separat für Personen mit und ohne Herzinfarkt.
+
+------------------------------------------------------------------------
+
+### Lösung
+
+Es gibt verschiedene Methode, wie man Variablen nach Gruppen analysieren kann. Hier werden drei verschiedene Möglichkeiten gezeigt.
+
+1.  Ohne die Verwendung einer zusätzlichen Funktion (hier am Beispiel des Mittelwertes)
+
+```{r}
+mean(df.cp$bmi[df.cp$mi == "No"], na.rm = TRUE)
+mean(df.cp$bmi[df.cp$mi == "Yes"], na.rm = TRUE)
+```
+
+------------------------------------------------------------------------
+
+2.  Durch die Erstellung eines Subsets mit der `subset()` Funktion (siehe `?subset`). Hier am Beispiel des Medians.\
+
+```{r}
+df.mi <- subset(df.cp, mi == "Yes")
+df.no.mi <- subset(df.cp, mi == "No")
+median(df.mi$bmi)
+median(df.no.mi$bmi)
+```
+
+------------------------------------------------------------------------
+
+3.  Für die besonders Interessierten bietet das Tidyverse-Package sehr attraktive Funktionen. Hier am Beispiel der Quantile.\
+
+```{r}
+library(tidyverse)
+library(kableExtra) # for nice tables
+df.cp %>% 
+  group_by(mi) %>%
+  summarise(Mean = mean(bmi), 
+            Median = median(bmi), 
+            Quartile_1 = quantile(bmi, 0.25), 
+            Quartile_2 = quantile(bmi, 0.5),
+            Quartile_3 = quantile(bmi, 0.75),
+            Quantile_95 = quantile(bmi, 0.95)) %>% 
+  kbl() %>% 
+  kable_paper()
+
+```

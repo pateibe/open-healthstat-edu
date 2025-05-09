@@ -29,7 +29,7 @@ Die Plattform Open HealthStat Edu entsteht an der Berner Fachhochschule und stel
 ## Erkunden
 
 {{< cards >}}
-  {{< card link="https://lukasstammler.github.io/statbook/" title="Openbook Leitfaden Statistik" icon="book-open" >}}
+  {{< card link="https://pateibe.github.io/demobook/" title="Openbook Leitfaden Statistik" icon="book-open" >}}
   {{< card link="msc" title="Master of Science Kurs" icon="academic-cap" >}}
   {{< card link="bsc" title="Bachelor of Science Kurs" icon="academic-cap" >}}
   {{< card link="kolloq" title="Statistik Kolloqium" icon="user-group" >}}

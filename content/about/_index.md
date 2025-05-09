@@ -14,7 +14,7 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 
 OER Plattform Statistik für Gesundheitsprofessionen
 
-Patric Eichelberger
+Patric Eichelberger, Nathanael Lutz, Lukas Stammler, André Meichtry
 
 BFH Gesundheit, 5. Mai 2025, lizenziert unter CC BY-SA 4.0 International
 

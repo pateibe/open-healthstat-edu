@@ -52,7 +52,7 @@ menu:
   main:
     - identifier: book
       name: Buch
-      url: https://lukasstammler.github.io/statbook/
+      url: https://pateibe.github.io/demobook/
       weight: 1
     - identifier: bsc
       name: BSc
@@ -85,6 +85,8 @@ menu:
 
 params:
   description: Offene Bildungsressourcen zur angewandten Statistik für Gesundheitsprofessionen
+
+  math: true
 
   navbar:
     displayTitle: true

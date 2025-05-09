@@ -4,4 +4,4 @@ cascade:
   type: docs
 ---
 
-## MSc
+## Willkommen im Master of Science Kurs Angewandte Statistik
