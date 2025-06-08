@@ -2,7 +2,7 @@
 title: 'Über das Projekt'
 ---
 
-{{< youtube https://youtu.be/GqVZzY1elq0 >}}
+{{< youtube GqVZzY1elq0 >}}
 
 ## Hintergrund und Ziele
 
