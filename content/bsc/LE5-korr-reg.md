@@ -1,6 +1,6 @@
 ---
 title: 'LE 5 - Analyse von Zusammenhängen'
-weight: 7
+weight: 6
 math: true
 ---
 
