@@ -1,4 +1,4 @@
-baseURL: "https://pateibe.github.io/open-healthstat-edu/"
+baseURL: "https://pelberger.github.io/open-healthstat-edu/"
 # baseURL: "https://example.com/"
 languageCode: en-us
 title: Open HealthStat Edu
@@ -24,10 +24,10 @@ defaultContentLanguage: de
 #     languageName: Deutsch
 #     weight: 1
 #     title: Open HealthStat Edu
-  # en:
-  #   languageName: English
-  #   weight: 2
-  #   title: Open HealthStat Edu
+# en:
+#   languageName: English
+#   weight: 2
+#   title: Open HealthStat Edu
 
 module:
   imports:
@@ -42,7 +42,7 @@ markup:
     extensions:
       passthrough:
         delimiters:
-          block: [['\[', '\]'], ['$$', '$$']]
+          block: [['\[', '\]'], ["$$", "$$"]]
           inline: [['\(', '\)']]
         enable: true
 
@@ -52,7 +52,7 @@ menu:
   main:
     - identifier: book
       name: Buch
-      url: https://pateibe.github.io/demobook/
+      url: https://pelberger.github.io/demobook/
       weight: 1
     - identifier: bsc
       name: BSc
@@ -79,7 +79,7 @@ menu:
         type: search
     - name: GitHub
       weight: 8
-      url: "https://github.com/pateibe/open-healthstat-edu"
+      url: "https://github.com/pelberger/open-healthstat-edu"
       params:
         icon: github
 
@@ -111,10 +111,10 @@ params:
     displayToggle: true
 
   footer:
-      enable: true
-      displayCopyright: true
-      displayPoweredBy: false
-      width: normal
+    enable: true
+    displayCopyright: true
+    displayPoweredBy: false
+    width: normal
 
   # Display the last modification date
   displayUpdatedDate: true
@@ -135,7 +135,7 @@ params:
 
   editURL:
     enable: true
-    base: "https://github.com/pateibe/open-healthstat-edu"
+    base: "https://github.com/pelberger/open-healthstat-edu"
 
   blog:
     list:
@@ -172,4 +172,4 @@ params:
       # theme: noborder_dark
 
 # For Quarto
-excludeFiles: [ "\\.qmd$", "\\.ipynb$", "\\.py$" ]
+excludeFiles: ["\\.qmd$", "\\.ipynb$", "\\.py$"]

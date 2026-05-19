@@ -12,7 +12,7 @@ Die **Open HealthStat Edu** Plattform soll ebenfalls eine Lernumgebung für jene
 
 ## Zielgruppen
 
-[Open HealthStat Edu](https://pateibe.github.io/open-healthstat-edu/) hat verschiedene Zielgruppen. Einerseits sind dies Personen, welche die Inhalte der Plattform im Rahmen ihrer Ausbildung oder Weiterbildung nutzen (Consumers). Weiter sind es die in die Statistiklehre am Departement G involvierten Lehrpersonen, welche die Plattform in der Lehre nutzen und Inhalte beisteuern (Contributors). Zudem können es Personen sein, welche den Quellcode in eigenen Projekten/Plattformen weiterverwenden wollen oder zur Weiterentwicklung der Plattform [Open HealthStat Edu](https://pateibe.github.io/open-healthstat-edu/) beitragen (Developers).
+[Open HealthStat Edu](https://pelberger.github.io/open-healthstat-edu/) hat verschiedene Zielgruppen. Einerseits sind dies Personen, welche die Inhalte der Plattform im Rahmen ihrer Ausbildung oder Weiterbildung nutzen (Consumers). Weiter sind es die in die Statistiklehre am Departement G involvierten Lehrpersonen, welche die Plattform in der Lehre nutzen und Inhalte beisteuern (Contributors). Zudem können es Personen sein, welche den Quellcode in eigenen Projekten/Plattformen weiterverwenden wollen oder zur Weiterentwicklung der Plattform [Open HealthStat Edu](https://pelberger.github.io/open-healthstat-edu/) beitragen (Developers).
 
 ### Consumers
 
@@ -20,7 +20,7 @@ Die Consumers können Studierende der BFH aber auch Personen von ausserhalb der 
 
 ### Contributors
 
-Die Contributors sind Personen, welche in der Statistiklehre am Departement Gesundheit in den Bachelor- und Masterstudiengängen tätig sind. Sie entwickeln, teilen und unterhalten die Inhalte von [Open HealthStat Edu](https://pateibe.github.io/open-healthstat-edu/). Die Contributors können PhD-Studierende, wissenschaftliche Mitarbeitende oder Dozierende sein, welche ihr Fachwissen und ihre Kompetenzen zur Hochschullehre beisteuern. Als Voraussetzung für ihre Aufgaben müssen sie entsprechende Expertise im Gebiet der Statistik und Methodik-Didaktik mitbringen. Je nach ihrer Rolle in der Lehre, tragen die Personen mehr oder weniger Verantwortung für den Inhalt von [Open HealthStat Edu](https://pateibe.github.io/open-healthstat-edu/). Contributors müssen über folgende Kompetenzen verfügen:
+Die Contributors sind Personen, welche in der Statistiklehre am Departement Gesundheit in den Bachelor- und Masterstudiengängen tätig sind. Sie entwickeln, teilen und unterhalten die Inhalte von [Open HealthStat Edu](https://pelberger.github.io/open-healthstat-edu/). Die Contributors können PhD-Studierende, wissenschaftliche Mitarbeitende oder Dozierende sein, welche ihr Fachwissen und ihre Kompetenzen zur Hochschullehre beisteuern. Als Voraussetzung für ihre Aufgaben müssen sie entsprechende Expertise im Gebiet der Statistik und Methodik-Didaktik mitbringen. Je nach ihrer Rolle in der Lehre, tragen die Personen mehr oder weniger Verantwortung für den Inhalt von [Open HealthStat Edu](https://pelberger.github.io/open-healthstat-edu/). Contributors müssen über folgende Kompetenzen verfügen:
 
 - Anwenden von Versionskontrolle mit [Git](https://git-scm.com/) für die Kollaboration auf GitHub und dem BFH-internen [Gitlab](https://gitlab.ti.bfh.ch).
 - Anwenden von [R](https://www.r-project.org/) und [RStudio](https://posit.co/download/rstudio-desktop/).
@@ -29,7 +29,7 @@ Die Contributors sind Personen, welche in der Statistiklehre am Departement Gesu
 
 ### Developers
 
-Die Developers sind Personen von innerhalb oder ausserhalb der BFH, welche den Quellcode der Plattform weiterverwenden und weiterentwickeln wollen. Developers, welche in der Statistiklehre am Departement Gesundheit in den Bachelor- und Masterstudiengängen tätig sind, entwickeln [Open HealthStat Edu](https://pateibe.github.io/open-healthstat-edu/) weiter. Im Vergleich mit den Contributors müssen die Developers über folgende Kompetenzen verfügen:
+Die Developers sind Personen von innerhalb oder ausserhalb der BFH, welche den Quellcode der Plattform weiterverwenden und weiterentwickeln wollen. Developers, welche in der Statistiklehre am Departement Gesundheit in den Bachelor- und Masterstudiengängen tätig sind, entwickeln [Open HealthStat Edu](https://pelberger.github.io/open-healthstat-edu/) weiter. Im Vergleich mit den Contributors müssen die Developers über folgende Kompetenzen verfügen:
 
 - Erstellen von neuen GitHub Repositories mit GitHub Pages.
 - Grundverständnis für Continuous Integration.
@@ -50,7 +50,7 @@ Die Inhalte dieser Website sind fast ausschliesslich mit der Auszeichnungssprach
 
 ### Inhaltsstruktur
 
-Die Struktur der Website geht aus der Struktur und den Inhalten (`.md` Dateien) des Verzeichnisses `content` im [GitHub Projekt](https://github.com/pateibe/open-healthstat-edu) hervor.
+Die Struktur der Website geht aus der Struktur und den Inhalten (`.md` Dateien) des Verzeichnisses `content` im [GitHub Projekt](https://github.com/pelberger/open-healthstat-edu) hervor.
 
 {{< filetree/container >}}
   {{< filetree/folder name="content" >}}
@@ -151,14 +151,14 @@ Die Webseite nutzt das [Hugo Frameworks](https://gohugo.io/) zur Generierung von
 
 ### Layout und Erscheinungsbild der Website
 
-Das Hugo Framework ist über [Themes](https://themes.gohugo.io/) sehr vielfältig auf verschieden Anwendungsfälle anpassbar. Diese Website nutzt das Theme [Hextra](https://imfing.github.io/hextra/docs/getting-started/). Hextra stellt beispielsweise die [Shortcodes](https://imfing.github.io/hextra/docs/guide/shortcodes/others/) zur Einbettung von PDFs oder Youtube Videos bereit. Oder auch die [Card Komponenten](https://imfing.github.io/hextra/docs/guide/shortcodes/cards/) auf der Homepage von [Open HealthStat Edu](https://pateibe.github.io/open-healthstat-edu/). Die Handhabung ist auf der [Hextra Website](https://imfing.github.io/hextra/docs/) recht gut dokumentiert. Geht man in die Details findet man Dinge die wiederum in der offiziellen Dokumentation fehlen. Da lohnt es sich einen Blick in den [Quellcode der Beispiels Website von Hextra](https://github.com/imfing/hextra/tree/main/exampleSite). Möchte man spezifische Anpassungen am Layout machen, müsste man sich mit [Tailwind CSS](https://tailwindcss.com/) und der umfangreichen [Hugo Dokumentation](https://gohugo.io/documentation/) beschäftigen.
+Das Hugo Framework ist über [Themes](https://themes.gohugo.io/) sehr vielfältig auf verschieden Anwendungsfälle anpassbar. Diese Website nutzt das Theme [Hextra](https://imfing.github.io/hextra/docs/getting-started/). Hextra stellt beispielsweise die [Shortcodes](https://imfing.github.io/hextra/docs/guide/shortcodes/others/) zur Einbettung von PDFs oder Youtube Videos bereit. Oder auch die [Card Komponenten](https://imfing.github.io/hextra/docs/guide/shortcodes/cards/) auf der Homepage von [Open HealthStat Edu](https://pelberger.github.io/open-healthstat-edu/). Die Handhabung ist auf der [Hextra Website](https://imfing.github.io/hextra/docs/) recht gut dokumentiert. Geht man in die Details findet man Dinge die wiederum in der offiziellen Dokumentation fehlen. Da lohnt es sich einen Blick in den [Quellcode der Beispiels Website von Hextra](https://github.com/imfing/hextra/tree/main/exampleSite). Möchte man spezifische Anpassungen am Layout machen, müsste man sich mit [Tailwind CSS](https://tailwindcss.com/) und der umfangreichen [Hugo Dokumentation](https://gohugo.io/documentation/) beschäftigen.
 
 ### Lokales Serving der Hugo Site
 
 Klonen des GitHub Repositories:
 
 ```
-git clone git@github.com:pateibe/open-healthstat-edu.git
+git clone git@github.com:pelberger/open-healthstat-edu.git
 ```
 
 Soll die Hugo Site lokal betrachtet werden muss vorgängig Hugo auf dem Rechner installiert sein. Ist das der Fall geht das mit:
@@ -183,7 +183,7 @@ Das Projekt ist so konfiguriert, dass die Hugo Website über GitHub Actions auto
 
 ### Einbindung von Quarto Dokumenten
 
-Quarto kann offiziell in Verbindung mit Hugo verwendet werden (https://quarto.org/docs/output-formats/hugo.html) wenn im Dokument Header das Format `hugo-md` gesetzt wird. Der Ablauf ist dann der, dass zuerst die Quarto Dokumente gerendert (aus `.qmd` werden `.md` Dateien für Hugo generiert) und anschliessend die Hugo Site generiert wird. Die Erfahrung hat gezeigt, dass dies nur mit Abstrichen funktioniert. Der grosse Nachteil ist, dass Hugo (und das Hugo Theme) das Rendering von Quarto "übergehen". Es ist also nicht möglich zum Beispiel ein Quarto Buch Projekt innerhalb Hugo "schön" zu rendern. Die bessere Option hier ist also, Dokumente wo man explizit das Rendering von Quarto braucht, auf einem separaten Repository zu publizieren. So ist es beispielsweise mit dem [Demobuch](https://pateibe.github.io/demobook/) gelöst, welches über eine GitHub Action aus dem [GitHub Repository](https://github.com/pateibe/demobook) generiert wird, sobald die Inhalte auf das Repository gepusht werden.
+Quarto kann offiziell in Verbindung mit Hugo verwendet werden (https://quarto.org/docs/output-formats/hugo.html) wenn im Dokument Header das Format `hugo-md` gesetzt wird. Der Ablauf ist dann der, dass zuerst die Quarto Dokumente gerendert (aus `.qmd` werden `.md` Dateien für Hugo generiert) und anschliessend die Hugo Site generiert wird. Die Erfahrung hat gezeigt, dass dies nur mit Abstrichen funktioniert. Der grosse Nachteil ist, dass Hugo (und das Hugo Theme) das Rendering von Quarto "übergehen". Es ist also nicht möglich zum Beispiel ein Quarto Buch Projekt innerhalb Hugo "schön" zu rendern. Die bessere Option hier ist also, Dokumente wo man explizit das Rendering von Quarto braucht, auf einem separaten Repository zu publizieren. So ist es beispielsweise mit dem [Demobuch](https://pelberger.github.io/demobook/) gelöst, welches über eine GitHub Action aus dem [GitHub Repository](https://github.com/pelberger/demobook) generiert wird, sobald die Inhalte auf das Repository gepusht werden.
 
 ## Lizenz
 
