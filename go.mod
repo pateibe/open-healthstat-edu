@@ -1,4 +1,4 @@
-module github.com/pelberger/open-healthstat-edu
+module github.com/bern-movement-lab/open-healthstat-edu
 
 go 1.24.2
 

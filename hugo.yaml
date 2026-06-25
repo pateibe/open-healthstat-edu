@@ -1,4 +1,4 @@
-baseURL: "https://pelberger.github.io/open-healthstat-edu/"
+baseURL: "https://bern-movement-lab.github.io/open-healthstat-edu/"
 # baseURL: "https://example.com/"
 languageCode: en-us
 title: Open HealthStat Edu
@@ -52,7 +52,7 @@ menu:
   main:
     - identifier: book
       name: Buch
-      url: https://pelberger.github.io/demobook/
+      url: https://bern-movement-lab.github.io/demobook/
       weight: 1
     - identifier: bsc
       name: BSc
@@ -79,7 +79,7 @@ menu:
         type: search
     - name: GitHub
       weight: 8
-      url: "https://github.com/pelberger/open-healthstat-edu"
+      url: "https://github.com/bern-movement-lab/open-healthstat-edu"
       params:
         icon: github
 
@@ -135,7 +135,7 @@ params:
 
   editURL:
     enable: true
-    base: "https://github.com/pelberger/open-healthstat-edu"
+    base: "https://github.com/bern-movement-lab/open-healthstat-edu"
 
   blog:
     list:
