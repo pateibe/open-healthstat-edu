@@ -71,6 +71,23 @@ Die Struktur der Website geht aus der Struktur und den Inhalten (`.md` Dateien) 
 
 Der Inhalt dieser Seite (About) findet sich zum Beispiel in `content/about/_index.md`. Mehr Informationen zum Aufbau der Website befinden sich unten in [How To für Developers](#how-to-für-developers).
 
+#### Front Matter
+
+Jede Markdowndatei hat eine [Front Matter](https://gohugo.io/content-management/front-matter/). Die Front Matter enthält Metadaten zum Inhalt, wie der Titel, Autorenschaft, Bezug zu anderem Inhalt oder zur Kontrolle wie Inhalte publiziert werden. Wir bevorzugen das `yaml` Format:
+
+```
+---
+date: 2024-02-02T04:14:54-08:00
+draft: false
+params:
+  author: John Smith
+title: Example
+weight: 10
+---
+```
+
+Wird das Feld `draft: true` gesetzt, wird der Inhalt nicht publiziert. Das Feld `weight: 10` sagt in diesem Beispiel, dass der Inhalt an zehnter Stelle gelistet wird.
+
 ### Einbettung von PDFs
 
 PDFs können folgendermassen eingebunden werden:
@@ -183,7 +200,7 @@ Das Projekt ist so konfiguriert, dass die Hugo Website über GitHub Actions auto
 
 ### Einbindung von Quarto Dokumenten
 
-Quarto kann offiziell in Verbindung mit Hugo verwendet werden (https://quarto.org/docs/output-formats/hugo.html) wenn im Dokument Header das Format `hugo-md` gesetzt wird. Der Ablauf ist dann der, dass zuerst die Quarto Dokumente gerendert (aus `.qmd` werden `.md` Dateien für Hugo generiert) und anschliessend die Hugo Site generiert wird. Die Erfahrung hat gezeigt, dass dies nur mit Abstrichen funktioniert. Der grosse Nachteil ist, dass Hugo (und das Hugo Theme) das Rendering von Quarto "übergehen". Es ist also nicht möglich zum Beispiel ein Quarto Buch Projekt innerhalb Hugo "schön" zu rendern. Die bessere Option hier ist also, Dokumente wo man explizit das Rendering von Quarto braucht, auf einem separaten Repository zu publizieren. So ist es beispielsweise mit dem [Demobuch](https://bern-movement-lab.github.io/demobook/) gelöst, welches über eine GitHub Action aus dem [GitHub Repository](https://github.com/bern-movement-lab/demobook) generiert wird, sobald die Inhalte auf das Repository gepusht werden.
+Quarto kann offiziell in Verbindung mit Hugo verwendet werden (https://quarto.org/docs/output-formats/hugo.html) wenn im Dokument Header das Format `hugo-md` gesetzt wird. Der Ablauf ist dann der, dass zuerst die Quarto Dokumente gerendert (aus `.qmd` werden `.md` Dateien für Hugo generiert) und anschliessend die Hugo Site generiert wird. Die Erfahrung hat gezeigt, dass dies nur mit Abstrichen funktioniert. Der grosse Nachteil ist, dass Hugo (und das Hugo Theme) das Rendering von Quarto "übergehen". Es ist also nicht möglich zum Beispiel ein Quarto Buch Projekt innerhalb Hugo "schön" zu rendern. Die bessere Option hier ist also, Dokumente wo man explizit das Rendering von Quarto braucht, auf einem separaten Repository zu publizieren. So ist es beispielsweise mit dem [Demobuch](https://bern-movement-lab.github.io/statbook/) gelöst, welches über eine GitHub Action aus dem [GitHub Repository](https://github.com/bern-movement-lab/demobook) generiert wird, sobald die Inhalte auf das Repository gepusht werden.
 
 ## Lizenz
 
@@ -200,3 +217,5 @@ BFH Gesundheit, 5. Mai 2025, lizenziert unter CC BY-SA 4.0 International
 ## Credits
 
 - Header logo "education" by Vinchi Chyla from [Noun Project](https://thenounproject.com/browse/icons/term/education/) (CC BY 3.0)
+
+Compilation finished at Tue Jul 21 06:54:56, duration 2.70 s

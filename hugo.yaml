@@ -1,13 +1,15 @@
+# Hugo configuration file
 baseURL: "https://bern-movement-lab.github.io/open-healthstat-edu/"
 # baseURL: "https://example.com/"
-languageCode: en-us
+locale: de-DE
+# locale: en-US
 title: Open HealthStat Edu
 
-enableRobotsTXT: true
+# enableRobotsTXT: true
 # Parse Git commit
-enableGitInfo: true
+# enableGitInfo: true
 # enableEmoji: false
-hasCJKLanguage: true
+# hasCJKLanguage: true
 
 # services:
 #   googleAnalytics:
@@ -18,41 +20,56 @@ hasCJKLanguage: true
 #   page: [HTML]
 #   section: [HTML, RSS]
 
-defaultContentLanguage: de
-# languages:
-#   de:
-#     languageName: Deutsch
-#     weight: 1
-#     title: Open HealthStat Edu
-# en:
-#   languageName: English
-#   weight: 2
-#   title: Open HealthStat Edu
+# Multilingual config
+# defaultContentLanguage = de
+# defaultContentLanguageInSubdir = true
+# [languages.de]
+#   direction = 'ltr'
+#   label = 'Deutsch'
+#   locale = 'de-DE'
+#   title = 'Projekt Dokumentation'
+#   weight = 1
+# [languages.en]
+#   direction = 'ltr'
+#   label = 'English'
+#   locale = 'en-US'
+#   title = 'Project Documentation'
+#   weight = 2
 
+# import hextra as module
 module:
   imports:
     - path: github.com/imfing/hextra
 
 markup:
+  # enable hextra syntax highlight
   highlight:
     noClasses: false
+  # allow raw html
   goldmark:
     renderer:
       unsafe: true
     extensions:
       passthrough:
         delimiters:
-          block: [['\[', '\]'], ["$$", "$$"]]
-          inline: [['\(', '\)']]
+          block:
+          - - '\['
+            - '\]'
+          - - $$
+            - $$
+          inline:
+          - - '\('
+            - '\)'
         enable: true
 
-enableInlineShortcodes: true
+security:
+  enableInlineShortcodes: true
 
 menu:
   main:
     - identifier: book
       name: Buch
-      url: https://bern-movement-lab.github.io/demobook/
+      url: https://bern-movement-lab.github.io/statbook/
       weight: 1
     - identifier: bsc
       name: BSc
@@ -86,7 +103,7 @@ menu:
 params:
   description: Offene Bildungsressourcen zur angewandten Statistik für Gesundheitsprofessionen
 
-  math: true
+  # math: true
 
   navbar:
     displayTitle: true

@@ -1,7 +1,6 @@
 ---
 title: "Übung: Deskriptive Statistik in R"
 # weight: 8
-math: true
 ---
 
 

@@ -1,5 +1,5 @@
 ---
 title: 'Blog'
 cascade:
-    type: blog
+  type: blog
 ---

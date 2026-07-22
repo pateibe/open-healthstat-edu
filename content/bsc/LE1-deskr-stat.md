@@ -1,7 +1,6 @@
 ---
 title: 'LE 1 - Deskriptive Statistik'
 weight: 2
-math: true
 ---
 
 ## Handout

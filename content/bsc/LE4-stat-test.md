@@ -1,7 +1,6 @@
 ---
 title: 'LE 4 - Statistische Tests'
 weight: 5
-math: true
 ---
 
 
