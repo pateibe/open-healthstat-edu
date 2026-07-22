@@ -190,3 +190,10 @@ params:
 
 # For Quarto
 excludeFiles: ["\\.qmd$", "\\.ipynb$", "\\.py$"]
+
+# Github Pages deployment
+# see https://gohugo.io/host-and-deploy/host-on-github-pages/
+# for how to setup
+caches:
+  images:
+    dir: :cacheDir/images/
