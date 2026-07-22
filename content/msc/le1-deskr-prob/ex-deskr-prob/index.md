@@ -1,6 +1,5 @@
 ---
 title: 'Übung: Deskriptive Statistik in R'
-math: true
 ---
 
 

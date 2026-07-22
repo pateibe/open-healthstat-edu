@@ -1,7 +1,6 @@
 ---
 title: 'LE 6 - Kategorielle Outcomes'
 weight: 7
-math: true
 ---
 
 

@@ -1,7 +1,6 @@
 ---
 title: Übungen Overall
 weight: 8
-math: true
 ---
 
 
