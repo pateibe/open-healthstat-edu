@@ -1,0 +1,438 @@
+id,status,sex,age,marital,education,smoke,newp12m
+80027,1,F,19,Single,Still in school,No,0
+56263,0,F,16,Single,Still in school,Yes,1
+40190,0,M,18,Single,17+,No,0
+59028,0,F,23,Married/Cohab/Div,17+,No,1
+70009,0,F,25,Married/Cohab/Div,16 or below,Yes,0
+14341,1,M,25,Single,17+,No,2
+19075,0,M,23,Single,17+,No,0
+58137,1,F,24,Single,16 or below,Yes,3
+64124,0,F,17,Single,Still in school,No,0
+70309,1,F,21,Single,17+,No,0
+26125,0,M,25,Single,16 or below,No,0
+64031,0,F,24,Married/Cohab/Div,16 or below,No,0
+66010,0,F,22,Single,17+,No,0
+66376,1,F,20,Single,16 or below,Yes,2
+43137,0,M,22,Single,16 or below,Yes,3
+80048,0,F,17,Single,Still in school,Yes,3
+48110,0,M,24,Single,Still in school,No,0
+54034,0,F,16,Single,Still in school,No,1
+56019,0,F,25,Married/Cohab/Div,17+,No,0
+75029,0,F,17,Single,Still in school,Yes,2
+86009,0,F,22,Single,17+,No,2
+18009,0,M,25,Married/Cohab/Div,17+,No,1
+58044,0,F,22,Single,17+,No,3
+54108,0,F,19,Single,17+,Yes,1
+54263,1,F,23,Single,17+,Yes,1
+12045,0,M,16,Single,Still in school,No,0
+63004,0,F,25,Married/Cohab/Div,17+,No,0
+58050,0,F,20,Single,16 or below,Yes,2
+52127,1,F,21,Single,Still in school,No,1
+49032,0,M,16,Single,Still in school,No,0
+40055,0,M,19,Single,Still in school,No,0
+58016,0,F,17,Single,Still in school,No,0
+12267,0,M,21,Single,Still in school,No,0
+56155,1,F,20,Single,Still in school,No,1
+54031,0,F,17,Single,Still in school,No,2
+86176,0,F,17,Single,Still in school,Yes,2
+56186,0,F,22,Married/Cohab/Div,17+,Yes,0
+58307,1,F,24,Single,16 or below,Yes,2
+70108,1,F,17,Single,Still in school,Yes,3
+86143,0,F,23,Single,16 or below,Yes,1
+89148,0,F,24,Single,16 or below,Yes,0
+64296,0,F,16,Single,Still in school,No,0
+82012,0,F,23,Married/Cohab/Div,17+,No,1
+45042,0,M,18,Single,Still in school,No,0
+30117,1,M,24,Single,17+,Yes,10
+78055,0,F,25,Single,17+,Yes,0
+59233,1,F,22,Single,16 or below,Yes,0
+56222,0,F,20,Single,Still in school,Yes,0
+64202,0,F,17,Single,Still in school,No,0
+59097,1,F,21,Married/Cohab/Div,17+,Yes,0
+59139,0,F,17,Single,Still in school,No,0
+38297,1,M,23,Single,16 or below,Yes,1
+86049,0,F,18,Single,17+,No,1
+51061,0,F,20,Single,Still in school,No,0
+80002,0,F,24,Single,17+,No,1
+59002,0,F,16,Single,Still in school,No,0
+38112,1,M,23,Single,16 or below,No,1
+60015,0,F,22,Married/Cohab/Div,Still in school,No,0
+86072,1,F,22,Single,16 or below,No,0
+73054,1,F,20,Single,Still in school,No,0
+52003,0,F,17,Single,16 or below,No,1
+86090,0,F,25,Married/Cohab/Div,17+,No,0
+70107,1,F,19,Single,Still in school,No,4
+16030,1,M,20,Single,17+,Yes,3
+88052,0,F,20,Single,17+,No,0
+52020,0,F,20,Single,17+,Yes,3
+66041,0,F,17,Single,17+,No,1
+64245,1,F,22,Married/Cohab/Div,17+,Yes,0
+58013,0,F,20,Married/Cohab/Div,16 or below,No,0
+59135,0,F,23,Single,17+,Yes,0
+56743,1,F,22,Single,17+,Yes,2
+82030,1,F,18,Single,17+,Yes,0
+66024,0,F,18,Single,Still in school,Yes,2
+19013,0,M,17,Single,16 or below,No,0
+80203,0,F,16,Single,Still in school,No,0
+54080,0,F,22,Single,17+,Yes,0
+58108,1,F,24,Single,17+,No,4
+86011,0,F,20,Single,17+,No,0
+52432,1,F,25,Married/Cohab/Div,16 or below,No,0
+58014,0,F,19,Single,16 or below,No,0
+59319,1,F,19,Single,Still in school,Yes,6
+56215,0,F,21,Married/Cohab/Div,Still in school,Yes,0
+24001,0,M,23,Single,17+,No,0
+42087,1,M,22,Single,17+,Yes,5
+14031,0,M,17,Single,Still in school,No,0
+43093,0,M,19,Single,17+,No,1
+76142,1,F,16,Single,Still in school,No,1
+73036,0,F,19,Single,Still in school,No,0
+18015,0,M,20,Single,16 or below,No,0
+33018,0,M,25,Single,16 or below,Yes,0
+33313,1,M,18,Single,17+,Yes,1
+76041,0,F,17,Single,Still in school,No,0
+20008,0,M,16,Single,Still in school,No,0
+58024,0,F,21,Single,Still in school,Yes,1
+64394,1,F,24,Single,Still in school,No,0
+86123,0,F,23,Single,16 or below,No,0
+36195,1,M,20,Single,16 or below,No,5
+52342,0,F,24,Married/Cohab/Div,17+,Yes,0
+51068,0,F,16,Single,16 or below,No,5
+58003,0,F,22,Single,17+,No,0
+30153,1,M,23,Single,17+,No,3
+60221,1,F,18,Single,16 or below,Yes,4
+51067,0,F,23,Single,17+,No,0
+52009,0,F,25,Single,17+,Yes,0
+24007,0,M,24,Single,16 or below,Yes,3
+89022,0,F,23,Single,17+,Yes,2
+60002,0,F,22,Married/Cohab/Div,17+,No,0
+20221,1,M,18,Single,16 or below,Yes,1
+18027,0,M,24,Single,17+,No,0
+60274,1,F,25,Single,17+,Yes,0
+14029,0,M,16,Single,Still in school,No,1
+59021,0,F,21,Single,16 or below,Yes,1
+18124,0,M,24,Married/Cohab/Div,17+,Yes,0
+12029,0,M,17,Single,Still in school,No,0
+73404,0,F,18,Single,Still in school,No,1
+52301,1,F,19,Single,Still in school,Yes,1
+64255,0,F,22,Single,Still in school,No,0
+64118,0,F,21,Single,Still in school,No,0
+56111,0,F,20,Married/Cohab/Div,17+,Yes,1
+59006,1,F,20,Single,Still in school,No,0
+75031,0,F,25,Married/Cohab/Div,17+,No,0
+52571,0,F,16,Single,16 or below,No,0
+66190,1,F,18,Single,17+,Yes,4
+26048,0,M,17,Single,Still in school,Yes,3
+14051,0,M,24,Married/Cohab/Div,16 or below,No,0
+73394,1,F,23,Single,17+,Yes,2
+59124,0,F,22,Single,16 or below,Yes,0
+82045,0,F,24,Married/Cohab/Div,17+,No,1
+16021,0,M,25,Single,16 or below,Yes,1
+56558,1,F,23,Single,17+,Yes,2
+24041,0,M,24,Married/Cohab/Div,17+,No,0
+45191,1,M,16,Single,16 or below,Yes,0
+76006,0,F,23,Single,17+,No,0
+38130,0,M,17,Single,Still in school,No,0
+56002,0,F,21,Single,17+,Yes,3
+19215,1,M,19,Single,16 or below,Yes,2
+46290,0,M,20,Single,17+,No,2
+64207,1,F,25,Single,17+,No,1
+70045,0,F,17,Single,Still in school,No,0
+38045,0,M,18,Single,Still in school,No,0
+38319,1,M,20,Single,17+,Yes,3
+73044,0,F,17,Single,Still in school,Yes,2
+62182,1,F,22,Single,16 or below,Yes,0
+64307,0,F,24,Single,17+,No,0
+73051,0,F,17,Single,16 or below,Yes,0
+86634,1,F,20,Single,Still in school,No,2
+76036,1,F,21,Single,17+,No,0
+78100,0,F,24,Single,17+,Yes,3
+78015,1,F,19,Single,17+,No,0
+52031,1,F,16,Single,Still in school,Yes,1
+20113,1,M,19,Single,16 or below,Yes,2
+73039,0,F,23,Married/Cohab/Div,17+,Yes,0
+51020,0,F,22,Married/Cohab/Div,16 or below,No,0
+59190,1,F,17,Single,16 or below,Yes,0
+18298,1,M,20,Single,16 or below,Yes,3
+59025,0,F,16,Single,Still in school,No,1
+59017,1,F,25,Married/Cohab/Div,17+,Yes,0
+62360,0,F,16,Single,16 or below,Yes,1
+56105,0,F,22,Single,17+,Yes,2
+86002,0,F,24,Married/Cohab/Div,16 or below,No,0
+60055,0,F,20,Single,Still in school,Yes,1
+38156,0,M,20,Single,Still in school,No,0
+70101,0,F,23,Married/Cohab/Div,17+,No,0
+56636,0,F,24,Single,17+,Yes,1
+26076,0,M,21,Married/Cohab/Div,16 or below,No,0
+86024,0,F,22,Single,17+,No,0
+78230,1,F,19,Single,Still in school,No,0
+86124,0,F,18,Single,Still in school,Yes,2
+24089,1,M,20,Single,Still in school,No,0
+66002,0,F,25,Single,16 or below,Yes,0
+20054,0,M,16,Single,Still in school,Yes,0
+82007,0,F,24,Single,17+,No,0
+19133,0,M,17,Single,Still in school,No,0
+70301,0,F,18,Single,16 or below,No,0
+36038,1,M,20,Single,16 or below,Yes,0
+49047,0,M,20,Single,Still in school,No,0
+80264,1,F,18,Single,Still in school,No,0
+86001,1,F,20,Single,17+,Yes,2
+20002,0,M,22,Single,16 or below,Yes,0
+60065,0,F,24,Single,17+,Yes,0
+52224,0,F,21,Single,16 or below,Yes,1
+60238,1,F,16,Single,16 or below,No,5
+80050,0,F,16,Single,Still in school,No,0
+86053,0,F,17,Married/Cohab/Div,17+,No,2
+66063,0,F,24,Married/Cohab/Div,17+,Yes,0
+54041,0,F,23,Married/Cohab/Div,17+,Yes,0
+59270,1,F,19,Single,16 or below,No,1
+82034,1,F,18,Single,Still in school,No,0
+26310,1,M,23,Married/Cohab/Div,16 or below,Yes,0
+14046,0,M,17,Single,Still in school,No,0
+70010,0,F,20,Married/Cohab/Div,Still in school,No,0
+86286,1,F,22,Single,Still in school,No,10
+64226,0,F,16,Single,Still in school,No,0
+64047,0,F,23,Single,17+,Yes,1
+30043,0,M,19,Single,17+,No,1
+52617,0,F,23,Single,17+,No,2
+58224,1,F,21,Married/Cohab/Div,17+,No,0
+12067,0,M,16,Single,16 or below,No,0
+80003,0,F,19,Single,17+,No,0
+63016,0,F,24,Married/Cohab/Div,17+,No,0
+23061,0,M,24,Single,16 or below,No,1
+70556,1,F,19,Single,17+,No,1
+66192,1,F,20,Single,16 or below,No,2
+14053,1,M,22,Single,17+,No,0
+70086,0,F,16,Single,Still in school,No,1
+86018,0,F,19,Single,17+,No,0
+89009,0,F,22,Married/Cohab/Div,17+,Yes,0
+54194,1,F,18,Single,17+,No,2
+62299,1,F,21,Single,17+,No,1
+12212,0,M,19,Single,17+,No,0
+86497,1,F,22,Single,17+,No,0
+63024,0,F,16,Single,Still in school,No,0
+85040,0,F,23,Single,17+,Yes,0
+63144,1,F,18,Single,17+,Yes,4
+40008,0,M,16,Single,Still in school,No,0
+58303,1,F,18,Single,Still in school,No,1
+38394,1,M,24,Single,16 or below,Yes,0
+52057,0,F,18,Single,Still in school,No,0
+86679,1,F,19,Single,Still in school,Yes,1
+16718,0,M,24,Single,17+,Yes,0
+52255,1,F,24,Single,17+,Yes,0
+89074,0,F,17,Single,Still in school,No,0
+52001,0,F,16,Single,Still in school,No,0
+18006,0,M,25,Single,17+,No,1
+60009,0,F,17,Single,16 or below,Yes,0
+54036,1,F,22,Married/Cohab/Div,Still in school,No,1
+46493,1,M,20,Single,17+,No,3
+54132,0,F,22,Married/Cohab/Div,17+,No,0
+89091,1,F,23,Single,16 or below,No,0
+66137,0,F,19,Single,16 or below,No,0
+63049,1,F,19,Single,16 or below,Yes,4
+56059,0,F,21,Married/Cohab/Div,17+,No,1
+24250,1,M,25,Single,17+,Yes,4
+19116,1,M,20,Single,16 or below,Yes,0
+66087,1,F,23,Single,16 or below,Yes,4
+16218,0,M,25,Single,17+,Yes,0
+76067,0,F,17,Single,Still in school,Yes,0
+14166,1,M,18,Single,Still in school,Yes,3
+12065,0,M,25,Single,17+,No,1
+82058,1,F,25,Single,17+,Yes,0
+58101,1,F,18,Single,17+,Yes,3
+70146,0,F,16,Single,Still in school,No,1
+86236,0,F,18,Single,17+,No,3
+80177,1,F,25,Single,17+,Yes,2
+56371,1,F,25,Single,17+,No,1
+80030,0,F,22,Single,Still in school,No,2
+54102,1,F,18,Single,Still in school,No,7
+54384,1,F,24,Married/Cohab/Div,17+,No,0
+86156,1,F,23,Married/Cohab/Div,17+,No,0
+82062,0,F,19,Single,16 or below,Yes,0
+86025,0,F,21,Single,Still in school,Yes,0
+82046,1,F,18,Single,16 or below,Yes,1
+12281,0,M,17,Single,Still in school,No,2
+73107,1,F,23,Single,16 or below,Yes,0
+70143,0,F,17,Single,Still in school,No,0
+86023,0,F,20,Single,Still in school,Yes,0
+20014,0,M,22,Single,16 or below,No,0
+43133,0,M,18,Single,17+,Yes,3
+76175,1,F,21,Single,17+,Yes,4
+35019,1,M,22,Married/Cohab/Div,17+,No,0
+80340,1,F,20,Single,17+,Yes,1
+20274,1,M,22,Single,17+,Yes,2
+24050,0,M,17,Single,Still in school,No,0
+46219,0,M,19,Single,Still in school,No,1
+12296,1,M,24,Married/Cohab/Div,Still in school,No,0
+24064,0,M,19,Single,Still in school,No,1
+66168,0,F,22,Married/Cohab/Div,17+,No,1
+37062,1,M,24,Single,17+,Yes,2
+80155,1,F,19,Single,17+,No,0
+19030,0,M,22,Single,17+,Yes,0
+59416,1,F,16,Single,Still in school,No,1
+70508,0,F,25,Single,17+,No,0
+86041,0,F,23,Single,17+,Yes,2
+66148,1,F,22,Single,17+,Yes,1
+20016,0,M,18,Single,17+,No,4
+78068,0,F,22,Married/Cohab/Div,16 or below,Yes,0
+16011,0,M,25,Single,Still in school,Yes,0
+86515,1,F,23,Single,17+,Yes,5
+78172,1,F,16,Single,16 or below,No,0
+66329,0,F,17,Single,Still in school,No,0
+51108,1,F,16,Single,Still in school,Yes,1
+49139,0,M,23,Single,17+,Yes,0
+70128,0,F,22,Married/Cohab/Div,17+,Yes,0
+63046,0,F,19,Single,17+,No,0
+16065,0,M,24,Single,17+,No,0
+11015,0,M,16,Single,16 or below,Yes,0
+38222,1,M,19,Single,17+,Yes,3
+86142,0,F,18,Single,17+,No,0
+56118,1,F,24,Single,17+,No,2
+58019,0,F,18,Single,Still in school,No,0
+54090,0,F,23,Single,16 or below,No,1
+78090,0,F,21,Single,Still in school,No,0
+70147,0,F,17,Single,Still in school,No,2
+73012,0,F,22,Married/Cohab/Div,16 or below,No,0
+40119,1,M,18,Single,Still in school,No,2
+54013,0,F,22,Married/Cohab/Div,16 or below,No,0
+14057,1,M,24,Single,16 or below,No,3
+51100,0,F,19,Single,16 or below,No,0
+12024,0,M,25,Single,Still in school,No,1
+59123,0,F,23,Single,16 or below,No,3
+64005,0,F,16,Single,Still in school,No,0
+70007,0,F,25,Married/Cohab/Div,17+,Yes,1
+66283,1,F,19,Single,17+,Yes,2
+30114,1,M,17,Single,Still in school,No,10
+16148,1,M,23,Single,17+,Yes,3
+59098,0,F,22,Married/Cohab/Div,17+,No,0
+70304,1,F,25,Single,17+,No,0
+64197,1,F,20,Single,Still in school,No,1
+51145,1,F,23,Single,17+,No,1
+56104,1,F,25,Married/Cohab/Div,17+,Yes,0
+56033,0,F,24,Single,17+,Yes,0
+54071,1,F,25,Single,17+,No,0
+64043,0,F,25,Married/Cohab/Div,17+,No,0
+66130,0,F,24,Married/Cohab/Div,17+,No,0
+14026,0,M,21,Single,17+,Yes,4
+75106,1,F,19,Single,17+,Yes,1
+66173,0,F,17,Single,16 or below,Yes,0
+52007,0,F,16,Single,Still in school,No,0
+63091,1,F,21,Single,Still in school,No,0
+86503,1,F,21,Single,17+,No,3
+43354,1,M,19,Single,17+,Yes,2
+86037,0,F,17,Single,Still in school,Yes,1
+38167,0,M,20,Single,Still in school,No,3
+51052,0,F,22,Married/Cohab/Div,16 or below,Yes,0
+59045,0,F,16,Single,Still in school,Yes,1
+73319,0,F,24,Single,16 or below,Yes,0
+33108,0,M,25,Single,16 or below,Yes,1
+70355,1,F,23,Single,17+,Yes,0
+59062,0,F,17,Single,17+,No,0
+40023,0,M,20,Single,16 or below,Yes,1
+49016,1,M,23,Single,16 or below,No,3
+30520,0,M,25,Married/Cohab/Div,16 or below,Yes,0
+59119,0,F,17,Single,17+,No,1
+18158,1,M,17,Single,Still in school,No,1
+82055,0,F,25,Married/Cohab/Div,17+,No,0
+86548,0,F,22,Married/Cohab/Div,17+,No,0
+26200,1,M,24,Married/Cohab/Div,16 or below,Yes,0
+78151,1,F,17,Single,Still in school,No,1
+30063,0,M,20,Single,17+,No,1
+73204,1,F,19,Single,16 or below,No,2
+38004,0,M,23,Single,16 or below,No,0
+66180,0,F,22,Single,17+,No,1
+78061,0,F,16,Single,16 or below,Yes,0
+66013,0,F,16,Single,Still in school,No,2
+12518,1,M,21,Single,16 or below,Yes,20
+51066,1,F,19,Single,17+,No,2
+63078,1,F,17,Single,17+,Yes,2
+45111,1,M,21,Single,Still in school,No,1
+86182,0,F,19,Single,Still in school,No,7
+60012,0,F,24,Single,17+,No,7
+70130,0,F,18,Single,Still in school,Yes,4
+63079,0,F,24,Married/Cohab/Div,17+,No,0
+49202,1,M,22,Single,Still in school,No,3
+76040,0,F,20,Single,16 or below,No,0
+80070,0,F,24,Single,16 or below,No,0
+64195,1,F,24,Single,Still in school,No,1
+59037,0,F,16,Single,Still in school,No,0
+76071,1,F,20,Single,17+,No,1
+52002,0,F,25,Married/Cohab/Div,17+,Yes,0
+36041,0,M,20,Single,16 or below,No,0
+58017,0,F,25,Married/Cohab/Div,17+,Yes,0
+80146,1,F,24,Single,17+,Yes,3
+82070,0,F,20,Single,16 or below,Yes,0
+73052,0,F,22,Single,16 or below,Yes,0
+73150,1,F,20,Single,17+,Yes,3
+86074,0,F,18,Single,17+,No,1
+73031,0,F,19,Single,Still in school,No,0
+16168,0,M,24,Single,17+,No,1
+80126,0,F,23,Married/Cohab/Div,17+,No,0
+78010,0,F,21,Single,17+,Yes,0
+82037,0,F,20,Single,Still in school,No,0
+58168,1,F,18,Single,17+,No,6
+12014,0,M,21,Single,Still in school,No,0
+70212,1,F,18,Single,Still in school,No,1
+76069,0,F,21,Single,17+,No,0
+64185,0,F,24,Single,Still in school,No,0
+59076,0,F,25,Married/Cohab/Div,17+,No,0
+18177,1,M,19,Single,17+,Yes,2
+40094,1,M,23,Single,17+,No,2
+82199,1,F,25,Married/Cohab/Div,17+,No,0
+70208,0,F,22,Single,17+,Yes,1
+28159,1,M,16,Single,Still in school,Yes,1
+80270,1,F,17,Single,17+,Yes,0
+38137,1,M,22,Married/Cohab/Div,16 or below,No,0
+80028,0,F,24,Single,17+,Yes,2
+54030,0,F,24,Single,17+,Yes,2
+78048,0,F,25,Single,Still in school,Yes,1
+78085,0,F,20,Single,Still in school,No,1
+54004,0,F,22,Single,17+,Yes,1
+24113,0,M,24,Single,17+,No,0
+66349,1,F,17,Single,16 or below,Yes,3
+86431,1,F,19,Single,17+,No,0
+46057,0,M,21,Single,Still in school,Yes,3
+30035,0,M,16,Single,Still in school,Yes,5
+64006,0,F,22,Single,17+,No,0
+88012,1,F,18,Single,16 or below,Yes,2
+56814,1,F,21,Married/Cohab/Div,Still in school,Yes,1
+54119,0,F,16,Single,Still in school,No,0
+77117,0,F,21,Single,16 or below,No,1
+51154,1,F,20,Single,17+,No,0
+78005,1,F,23,Single,17+,No,0
+64254,1,F,18,Single,17+,Yes,2
+80055,0,F,16,Single,Still in school,Yes,0
+58012,0,F,17,Single,Still in school,Yes,1
+49002,1,M,21,Single,16 or below,Yes,4
+86351,1,F,18,Single,Still in school,No,4
+80036,0,F,25,Married/Cohab/Div,17+,No,0
+49008,0,M,16,Single,Still in school,No,0
+70129,0,F,18,Single,17+,No,0
+63077,1,F,23,Married/Cohab/Div,16 or below,Yes,0
+78083,0,F,22,Single,16 or below,Yes,0
+73094,0,F,25,Married/Cohab/Div,16 or below,No,0
+80311,1,F,21,Single,16 or below,No,1
+22020,0,M,17,Single,Still in school,Yes,2
+89255,1,F,24,Married/Cohab/Div,17+,Yes,0
+46088,0,M,16,Single,Still in school,Yes,5
+59154,1,F,18,Single,17+,Yes,2
+36083,0,M,19,Single,Still in school,No,0
+28061,1,M,18,Single,16 or below,Yes,1
+80029,0,F,18,Married/Cohab/Div,16 or below,Yes,1
+36003,0,M,16,Single,Still in school,No,0
+12018,0,M,23,Single,17+,No,0
+86380,0,F,24,Single,Still in school,Yes,0
+12061,0,M,24,Single,Still in school,Yes,4
+86235,0,F,21,Married/Cohab/Div,17+,Yes,0
+19081,1,M,20,Single,Still in school,Yes,1
+85142,1,F,20,Single,17+,No,1
+18014,0,M,16,Single,Still in school,No,0
+64349,1,F,25,Single,Still in school,No,0
+12397,1,M,23,Single,16 or below,No,10
+86042,0,F,23,Married/Cohab/Div,17+,Yes,1
+80338,1,F,19,Single,16 or below,No,1
+38164,0,M,19,Single,16 or below,Yes,0
+52373,1,F,17,Single,17+,Yes,3
+26078,0,M,18,Single,17+,No,2
+58015,0,F,21,Single,Still in school,No,0
+20118,0,M,23,Single,16 or below,Yes,2

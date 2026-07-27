@@ -1,0 +1,560 @@
+```{r setup-06, include=FALSE}
+rm(list = ls())
+
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE, 
+                      message = FALSE,
+                      fig.align = "center",
+                      fig.dim = c(5, 4))
+
+library(openintro)
+library(tidyverse)
+library(knitr)
+library(patchwork)
+library(Hmisc)       # for errorbars in ggplot
+library(kableExtra)
+library(graphics)
+library(rio)
+library(mlbench)
+
+ggred <- "#F8766D"
+ggblue <- "#00BFC4"
+gggreen <- "#7CAE00"
+ggviolet <- "#C77CFF"
+
+
+```
+
+```{r echo=FALSE}
+#knitr::write_bib(c(.packages(), "openintro"), "packages.bib")
+```
+
+
+# Einführung in die Überlebensanalyse
+
+Die Survival-Analyse ist ein statistisches Verfahren, das sich mit der Analyse der Zeit bis zu einem bestimmten Ereignis, oft als Überlebenszeit (*Time to event*) bezeichnet, beschäftigt. Solche Ereignisse können unterschiedlich sein, wie z. B. 
+
+- der Tod
+- das Auftreten einer Krankheit
+- das Versagen eines technischen Systems
+
+Wichtige Konzepte sind 
+
+- die **Überlebensfunktion**, die angibt, wie wahrscheinlich es ist, dass ein Individuum oder Einheit bis zu einem bestimmten Zeitpunkt überlebt.
+- die **Hazardrate** als das momentane Risiko, dass ein Ereignis genau zu einem bestimmten Zeitpunkt eintritt, unter der Bedingung, dass es bis dahin nicht eingetreten ist.
+
+Die Survival-Analyse wird häufig in der Medizin, Biologie und Technik eingesetzt.
+
+
+## Notation
+ 
+ - $\Pr()$: Wahrscheinlichkeit eines Ereignisses
+ - $T$: Überlebenszeit, Time-to-event
+ - $f(t)$: Ereignis- oder Ausfalldichte
+ - $F(t)$: kumulative Verteilungsfunktion
+ - $S(t)$: Überlebensfunktion oder Surivor-Funktion
+ - $h(t)$: Hazard-Funktion, Inzidenzrate, force of transition
+ - $H(t)$: Kumulierte Hazard
+
+## Lernziele
+
+
+::: callout-important
+
+1. Sie können den Unterschied zwischen Hazard und Survival erklären.
+
+2. Sie können Sterbetafeln interpretieren.
+
+3.  Sie können mit den Funktionen `Surv()` und `survfit()` aus dem Paket `survival` Überlebenstabellen für eine oder zwei Gruppen erstellen und diese interpretieren.
+
+4. Sie können die Überlebenskurve für eine oder zwei Gruppen graphisch darstellen.
+
+3.  Sie können mit der Funktion `survdiff()` prüfen, ob sich die Überlebenskurven von zwei Gruppen statistisch unterscheiden.
+
+
+::: 
+
+## Survivor Funktion
+
+Sei $T$ eine Zufallsvariable, die die **Wartezeit** bis zum Eintreten eines Ereignisses darstellt. Die Wahrscheinlichkeit, dass die **Überlebenszeit** $T$ kleiner oder gleich $t$ ist, wird notiert als
+  
+$$
+F(t) = \Pr(T \leq t).
+$$
+  
+  
+$F(t)$ stellt die **kumulative Verteilungsfunktion** von $T$ dar. $f(t) = \frac{\mathrm{d}F(t)}{\mathrm{d}t}$ ist die **Ereignisdichte**. Die **Überlebensfunktion** $S(t)$ ist das Komplement von $F(t)$, also die Wahrscheinlichkeit, dass die Überlebenszeit grösser als $t$ ist:
+ 
+
+::: callout-important
+
+### Survivor-Funktion
+  
+$$
+\large
+S(t) = 1 - F(t) = \Pr(T > t)
+$$
+:::
+
+### Hazard Funktion
+
+Die zentrale Grösse ist nun die **hazard function** $h(t)$. Dies stellt eine **Inzidenzrate** oder **force of transition** dar. Die Hazard beschreibt den Übergang vom Zustand "lebend" zum Zustand "tot".
+
+
+$$
+\large
+\text{"Lebend"} \boxed{0} \xrightarrow{\color{red}{h(t)}} \boxed{1} \text{"Tot"}
+$$
+
+
+Die Hazard ist definiert als:
+
+$$
+\large
+h(t) = \lim_{\Delta t \to 0} \frac{\Pr(t \leq T < t + \Delta t \mid T \geq t)}{\Delta t}
+$$
+
+Erklärung:
+
+1. **Bedingung „Überlebt bis t“**  
+   Wir betrachten nur Individuen, die bis zum Zeitpunkt $t$ nicht das Ereignis erlebt haben, $T \geq t$.
+2. **Wahrscheinlichkeit im kleinen Intervall**, $\Pr(t \leq T < t + \Delta t \mid T \geq t)$. Dies ist die bedingte Wahrscheinlichkeit, dass das Ereignis im Intervall $[t, t+\Delta t)$ eintritt, gegeben, dass es bis $t$ nicht eingetreten ist.
+3. **Normierung durch Intervallbreite**: $\frac{\Pr(\cdot)}{\Delta t}$. Damit erhalten wir eine **Rate pro Zeiteinheit**, nicht eine absolute Wahrscheinlichkeit.
+4. **Grenzwert für $\Delta t \to 0$**: $\lim_{\Delta t \to 0}$. Der Grenzwert macht die Rate **instantan**: Wir messen das Risiko „sofort nach $t$“.
+
+
+Hazards stellen eine momentane Übergangskraft dar. Hazards sind natürliche Quantitiäten im Umgang mit Time-to-event Daten. Man kann obige Hazard Funktion auch schreiben als Hazard zum Zeitpunkt $t$ multipliziert mit der Länge eines sehr kleinen Zeitintervalls:
+  
+
+::: callout-important
+
+### Hazard
+
+$$
+\Large
+h(t) \, \mathrm{d}t = \Pr(T \in \mathrm{d}t \mid {T \geq t})
+$$
+
+Das ist die Wahrscheinlichkeit, dass ein Ereignis in einem sehr kleinen Zeitintervall d$t$ eintritt, unter der Bedingung, dass die Person bis kurz vor $t$  ereignisfrei war.
+:::
+
+Die **kumulative Hazard** ist die integrierte Hazardfunktion, also die **kumulierte Hazard** über die Zeit:
+
+$$
+H(t) = \int_0^t h(u) \, \mathrm{d}u
+$$
+
+Der Anstieg der Hazard zwischen zwei Zeitpunkten $t_1$ und $t_2$ ist:
+
+$$
+  \Delta H(t) = H(t_2) - H(t_1) = \int_{t_1}^{t_2} h(u) \, \mathrm{d}u
+$$
+
+Wenn $t_1$ nah bei $t_2$ liegt, dann gilt $\Delta H(t) \approx h(t) \Delta t$, wobei $\Delta t = t_2 - t_1$ ist.
+
+---
+
+### Zensierte Daten
+
+Ein fast universelles Merkmal von Überlebensdaten ist die **Zensierung**. Die häufigste Form ist die **Rechtszensierung**. Dabei endet der Beobachtungszeitraum oder eine Person wird aus der Studie entfernt, **bevor das Ereignis eintritt**. Beispielsweise sind manche Personen am Ende einer klinischen Studie **noch am Leben** oder scheiden aus der Studie aus anderen Gründen als Tod vorzeitig aus. 
+
+Man kann zeigen, dass **zufällige Zensierung die Hazardfunktion nicht beeinflusst**. 
+
+
+### Zusammenhang zwischen den Grössen
+
+Die Hazardfunktion $h(t)$, die kumulative Hazard $H(t)$, die Überlebensfunktion $S(t)$, die Ausfallsdichte $f(t)$ und die kumulative Ausfallfunktion $F(t)$ sind miteinander verknüpft. 
+
+Wir nehmen die Zusammhänge ohne Beweise zur Kenntnis (aber diejenigen, die in der Schule gerne abgeleitet und integriert haben, können es versuchen). Es gilt:
+
+$$
+\begin{aligned}
+h(t) &= \frac{f(t)}{S(t)}= -\frac{\mathrm{d}}{\mathrm{d}t} \mathrm{log} S(t)\\
+\\
+S(t) &= \exp(-H(t))\\
+\\
+F(t) &= 1 - \exp(-H(t))\\
+\\
+\mathrm{log} H(t) &= \mathrm{log} (-\mathrm{log} S(t))
+\end{aligned}
+$$
+
+
+
+Mit diesen Zusammenhängen werden wir im nächsten Abschnitt Beispiele anschauen für verschiedene Hazardfunktionen $h(t)$. 
+
+### Konstanter Hazard über die Zeit
+
+Die einfachste Überlebensverteilung ergibt sich bei **konstantem Hazard** über die Zeit. Ein Beispiel für konstanten Hazard wäre der **Zerfall von radioaktiven Atomen**. 
+
+- $h(t) = \lambda$ ist konstant.
+- $H(t) = \lambda t$
+- $S(t) = \exp(-\lambda t)$.
+- $F(t) = 1 - \exp(-\lambda t)$.
+- $f(t) = \lambda \exp(-\lambda t)$.
+
+Nehmen wir $h(t)=\lambda=2$ als Beispiel. Dies entspricht dann der **Exponentialverteilung** mit (konstanter) Rate $\lambda=2$,
+
+$$
+f(t) = 2 \exp(-2 t).
+$$
+
+Der Erwartungswert einer Exponentialverteilung ist $1/\lambda$, hier also 0.5. Der Median einer Exponentialverteilung ist $\mathrm{log}(2)/\lambda=`r log(2)`/\lambda=`r log(2)/2`$, da
+
+$$
+S(t) = \exp(-\lambda t)=0.5 \Rightarrow t=-\mathrm{log}(0.5)/\lambda  \Rightarrow t=\mathrm{log}(2)/\lambda
+$$ 
+Das entspricht dann der **Halbwertszeit**.
+
+
+In folgender Abbildung sehen wir $h(t)$, $H(t)$, $f(t)$, $F(t)$ und $S(t)$ (mit der Halbwertszeit) für $h(t)=\lambda=2$:
+
+
+```{r fig.dim=c(9,6),echo=FALSE}
+par(mfrow=c(2,3))
+time<-seq(0,3,.01) #time
+h<-2           #constant hazard
+f<-h*exp(-h*time) #exponential density
+F<-1-exp(-h*time) #exponential distribution
+H<-h*time         #cumulative hazard
+S<-exp(-h*time)   #survival functin
+plot(time,rep(h,length(time)),ylab="hazard",type="l",main="h(t)")
+plot(time,H,ylab="cumulative hazard",type="l",main="H(t)")
+plot(time,f,ylab="failure density",type="l",main="f(t)")
+plot(time,F,ylab="cumulative failure",type="l",main="F(t)")
+plot(time,S,ylab="survival",type="l",main="S(t)")
+abline(v=log(2)/h,h=0.5,lty=3)
+```
+
+
+
+```{r eval=FALSE,include=FALSE,fig.dim=c(9,6),echo=FALSE}
+par(mfrow=c(2,3))
+time<-seq(0,3,.01) #time
+h<-0          #constant hazard
+f<-h*exp(-h*time) #exponential density
+F<-1-exp(-h*time) #exponential distribution
+H<-h*time         #cumulative hazard
+S<-exp(-h*time)   #survival functin
+plot(time,rep(h,length(time)),ylab="hazard",type="l",main="h(t)")
+plot(time,H,ylab="cumulative hazard",type="l",main="H(t)")
+plot(time,f,ylab="failure density",type="l",main="f(t)")
+plot(time,F,ylab="cumulative failure",type="l",main="F(t)")
+plot(time,S,ylab="survival",type="l",main="S(t)")
+```
+
+
+
+
+### Nicht-konstanter Hazard über die Zeit
+
+Im Allgemeinen ist natürlich der Hazard nicht konstant. In diesem Beispiel betrachten wir eine nicht-konstante Hazardfunktion. Der Hazard hängt z.B. von der Zeit ab gemäss
+$$
+h(t) = t^{\frac{10}{3}}
+$$
+
+
+Die folgenden Formeln beschreiben $h(t), H(t), f(t), F(t)$ und $S(t)$. Einige erinnern sich vielleicht an die z.T. mühsamen Übungen zum 
+Ableiten und Integrieren an der Mittelschule, wer also Lust hat zum Reproduzieren:
+
+- $h(t) = t^{\frac{10}{3}}$
+- $H(t) = \frac{3}{13} t^{\frac{13}{3}}$
+- $S(t) = \exp\left(-\frac{3}{13} t^{\frac{13}{3}}\right)$
+- $f(t) = h(t) \cdot S(t)$
+- $F(t) = 1 - S(t)$
+
+
+```{r fig.dim=c(9,6),echo=FALSE}
+par(mfrow=c(2,3))
+time<-seq(0,3,.01)
+h<-time^(10/3)
+H<-3/13*time^(13/3)
+S<-exp(-H)
+f<-h*S
+F<-1-S
+plot(time,h,type="l",ylab="hazard",main="h(t)")
+plot(time,H,type="l",ylab="cumulative hazard",main="H(t)")
+plot(time,f,type="l",ylab="event density",main="f(t)")
+plot(time,F,type="l",ylab="cumulative failure",main="F(t)")
+plot(time,S,type="l",ylab="survival",main="S(t)")
+```
+
+
+
+## Schätzung der Überlebensfunktion
+
+Wir haben jetzt die Survivor-Funktion theoretisch eingeführt. Wie immer, brauchen wir ein **empirisches Pendant**, ein $\hat{S}(t)$. Dazu gehören im wesentlichen 
+
+- die Sterbetafeln-Methode und 
+- der Kaplan-Meier Schätzer. 
+
+### Sterbetafeln
+
+Die Methode der **Sterbetafeln** (Life Table Method) ist ein klassischer Ansatz zur Schätzung der Überlebensfunktion $S(t)$. Sie basiert auf einer **Einteilung der Zeitachse** in Intervalle $i = 1,\dots, I$ von gleicher Länge. Das **Sterberisiko** $r_i$ im Intervall $i$ wird geschätzt als
+  $$
+  \hat{r}_i = \frac{\text{Anzahl der Patienten, die im Intervall } i \text{ gestorben sind}}{\text{Anzahl der Patienten, die zu Beginn des Intervalls } i \text{ noch lebten}} = \frac{d_i}{n_i}.
+  $$
+
+Die **Überlebensfunktion** wird dann geschätzt als:
+  $$
+  \hat{S}(t) = \prod_{i=1}^t (1 - \hat{r}_i) = (1 - \hat{r}_1) \times \dots \times (1 - \hat{r}_t)
+ $$
+
+
+<!-- Konfidenzintervalle können für $\hat{S}(i)$, $\mathrm{log} \hat{S}(i)$ oder $\mathrm{log}(-\mathrm{log} \hat{S}(i))$ berechnet werden. -->
+
+
+Versuche, die Werte in  @tbl-lifetab nachzuvollziehen. Eine Nuance ist, dass die "At risk"-Anzahl alle Überlebenden am Beginn des Intervalls minus 0.5 der zensierten Fälle darstellt. 
+
+
+```{r echo=FALSE}
+#| label: tbl-lifetab
+#| tbl-cap: "Life Table"
+m<-1:18
+d<-c(12,9,17,36,6,18,13,11,14,13,15,6,6,4,5,7,12,3)
+c<-c(0,0,1,4,2,7,5,3,3,0,4,1,0,2,0,1,0,0)
+a<-c(rep(0,18))
+a[1]<-240
+for (i in 1:17)
+a[i+1]<-a[i]-d[i]-c[i]
+n<-a-c/2
+r<-d/n
+s<-1-r
+S<-cumprod(s)
+lt<-data.frame(Month=m,AliveBegin=a,Deaths=d,Censored=c,AtRisk=n,RiskDeath=r,RiskSurv=s,Survival=S)
+kable(lt, row.names = FALSE,align="r")
+```
+
+Die geschätzte Survival $\hat{S}(t)$ und Kumulative Failure $\hat{F}(t)$ können wir plotten:
+
+```{r echo=FALSE,fig.dim=c(9,5)}
+par(mfrow=c(1,2))
+plot(S,xlab="Month",type="both",ylim=c(0,1),ylab="Survival")
+plot(1-S,xlab="Month",type="both",ylim=c(0,1),ylab="Cumulative Failure")
+```
+
+
+### Kaplan-Meier-Schätzer
+
+In vielen Studien ist die **exakte Nachbeobachtungszeit** für jedes Individuum bekannt, sodass eine Aggregation in vorgegebenen Zeitintervallen vermieden werden kann. Der **Kaplan-Meier-Schätzer** der Überlebensfunktion nutzt direkt die Zeitpunkte, in denen mindestens ein Ereignis eintritt. Die Anwendung der Lebenszeittabellen-Methode auf diese Intervalle liefert im Wesentlichen den Kaplan-Meier-Schätzer.
+
+Beispiel: Die NCCTG-Lungendaten betreffen das Überleben von Patienten mit fortgeschrittenem Lungenkrebs, gesammelt von der North Central Cancer Treatment Group. Die Leistungspunkte bewerten, wie gut der Patient alltägliche Aktivitäten ausführen kann.
+Siehe für Code-Book `?survival::lung`.
+
+```{r }
+library(survival)
+```
+
+
+- `inst`:       Institution 
+- `time`:       Survival time in days
+- `status`:     censoring status 1=censored, 2=dead
+- `age`:        Age in years
+- `sex`:        Male=1 Female=2
+- `ph.ecog`:    ECOG performance score as rated by the physician.
+                   0=asymptomatic, 1= symptomatic but completely ambulatory, 2= in bed 
+                   <50% of the day, 3= in bed > 50% of the day but not bedbound, 4 =
+                   bedbound
+- `ph.karno`:   Karnofsky performance score (bad=0-good=100) rated by physician
+- `pat.karno`:  Karnofsky performance score as rated by patient
+- `meal.cal`:   Calories consumed at meals
+- `wt.loss`:    Weight loss in last six months (pounds)
+
+
+```{r }
+lung$sex<-factor(lung$sex,levels=c(1,2),labels=c("m","f"))
+str(lung)
+```
+
+Schauen wir uns die Daten an:
+
+```{r }
+psych::headTail(lung)
+```
+
+Wir kreieren nun ein sogenanntes **survival Objekt** mit `Surv()`:
+
+```{r }
+S<-with(lung,Surv(time,status))
+S
+```
+Wir sehen die Zeiten beim Ereignis. Die $+$ weisen auf zensierte Zeiten hin. Das sind Zeitpunkte, in denen eine Person die Studie ohne Eintreffen vom Ereignis verlässt oder die Studie beendet war, ohne dass das Ereignis eingetroffen ist.
+
+Nun die Kaplan-Meier Schätzung vom Survival. Diese bekommen wir mit `survfit()`,
+
+```{r }
+m.km<-survfit(S~1)
+```
+Hier schreiben wir `~1`, (one-sample), da wir keine kategorielle Eingangsgrösse haben. Die Anzahl Events sowie Median-Survival mit 95% KI bekommen wir mit dem Output
+
+```{r }
+m.km
+```
+Mit `summary(m.km)` bekommen wir schliesslich die Kaplan-Meier Tabelle. Da diese lang ist, hier nur die ersten 10 Zeilen:
+
+
+```{r echo=FALSE}
+as.data.frame(summary(m.km)[c("time","n.risk","n.event","n.censor","surv")])[1:10,]
+```
+
+
+Wir können die Survival oder Failure plotten mit 
+
+```{r, fig.dim=c(9,6)}
+par(mfrow=c(1,2))
+plot(m.km, xlab = "time", ylab = "Survival")# default
+plot(m.km, fun = "F", xlab = "time", ylab = "Cumulative failure")
+```
+
+
+### Zwei Gruppen vergleichen
+
+Oft wollen wir zwei Survival-Funktionen vergleichen, hier zum Beispiel bezüglich biologischem Geschlecht. Diese ist jetzt ein unabhängiger kategorieller Prädiktor:
+
+
+```{r }
+m.km2<-survfit(Surv(time,status)~sex,data=lung)
+m.km2
+``` 
+
+Schauen wir uns die beiden Survival-Funktionen an (einmal mit Intervallschätzung)
+
+```{r fig.dim=c(9,6)}
+par(mfrow=c(1,2))
+plot(m.km2, lty = 1:2,col=1:2,xlab="days",ylab="survival")
+legend(600, 0.9, c("m", "f"), lty =1:2,col=1:2)
+title("Kaplan-Meier Curves")
+plot(m.km2, lty = 1:2, col=1:2,conf.int = 0.95,xlab="days",ylab="survival")
+legend(600, 0.9, c("m", "f"), lty = 1:2,col= 1:2)
+title("Kaplan-Meier Curves")
+```
+
+
+### Log-Rank-Test
+
+Der **Log-Rank-Test** ist ein statistisches Verfahren, das verwendet wird, um zu prüfen, ob es signifikante Unterschiede zwischen zwei oder mehr Überlebenskurven gibt. Dieser Test ist besonders nützlich in der medizinischen Forschung, um zu analysieren, wie verschiedene Behandlungen oder Risikofaktoren das Überleben von Patienten beeinflussen. 
+
+Dabei vergleicht der Log-Rank-Test die beobachteten und erwarteten Ereignisse (z. B. Todesfälle) in den verschiedenen Gruppen über die Zeit hinweg, um festzustellen, ob die Unterschiede statistisch signifikant sind.
+
+
+Den Log-Rank Test bekommen wir mit `survdiff()`:
+
+
+```{r }
+survdiff(Surv(time,status)~sex,data=lung)
+```
+Die Nullhypothese, dass sich die Überlebenskurven der beiden Gruppen nicht unterscheiden, würde also verworfen.
+
+
+Es gibt immer viele Alternativen fürs Plotten, z.B. eine Funktion aus dem Paket `survminer`:
+
+```{r }
+survminer::ggsurvplot(m.km2, data = lung, conf.int = TRUE, surv.median.line = "hv", legend.labs = c("m", "f"), pval = TRUE)
+```
+Hier sind die beiden Median-Survivals dargestellt. 
+
+
+## Exkurs: Modelle für Überlebensdaten
+
+Das **Cox-Regressionmodell für proportionale Hazardraten** ist das gebräuchlichste Werkzeug zur Untersuchung der **Abhängigkeit der Überlebenszeit von kategoriellen und kontinuierlichen Prädiktoren**. 
+
+Seien $h_1(t)$ und $h_2(t)$ die Hazardfunktionen in zwei Gruppen. Die **proportionale Hazardannahme** impliziert, dass
+$$
+\frac{h_1(t)}{h_2(t)}=\text{konstant}.
+$$
+
+Das Cox-Modell ist semi-parametrisch und ist das am meisten gebrauchte Modell bei Time-to-Event Daten.
+
+### Cox-Regression für proportionale Hazardraten
+
+Für jede Einheit $i$ kann die Hazardrate nun von Kovariaten $x_1,\dots, x_m$ abhängen. Das Modell wird geschrieben als
+
+$$
+h_i(t)=h_0(t)\cdot\exp(\beta_1x_{i1}+\dots +\beta_mx_{im}), \quad i=1,\ldots,n,
+$$
+
+oder (die $\mathrm{log}$-Regel verfolgt uns auf Schritt und Tritt...)
+
+$$
+\mathrm{log}(h_i(t))=\underbrace{\mathrm{log} (h_0(t))}_{\text{"Intercept"}}+\beta_1x_{i1}+\dots +\beta_mx_{im}, \quad i=1,\ldots,n,
+$$
+mit einer nicht spezifizierten **Basis-Hazardfunktion** $h_0(t)$, einem $m$-Vektor von Regressionskoeffizienten und einem $m$-Vektor von Kovariaten. Das Ziel ist dann, den Effekt von Eingangsgrössen auf die Hazardrate zu schätzen. 
+
+
+Wenn wir zwei Einheiten $1$ und $2$ mit Hazard $h_1$ und $h_2$ vergleichen, haben wir
+
+$$
+\begin{aligned}
+\frac{h_1(t)}{h_2(t)}&=\frac{\exp(\beta_1x_{11}+\dots+\beta_mx_{1m})}{\exp(\beta_1x_{21}+\dots+ \beta_mx_{2m})}\\
+&=\exp((\beta_1x_{11}+\dots +\beta_mx_{1m})-(\beta_1x_{21}+\dots+ \beta_mx_{2m}))\\
+&=\exp(\beta_1(x_{11}-x_{21})+\dots +\beta_m(x_{1m}-x_{2m})),
+\end{aligned}
+$$
+
+und
+
+$$
+\mathrm{log} \frac{h_1(t)}{h_2(t)}=\beta_1(x_{11}-x_{21})+\dots +\beta_m(x_{1m}-x_{2m}).
+$$
+
+Die Grössen $\beta_k$ reflektieren also den Effekt einer Erhöhung der Kovariate $x_k$ um eine Einheit (andere Eingangsgrössen konstant gehalten) und können als **Log Hazard Ratios (HR)** interpretiert werden. Die Grössen $\exp(\beta_k)$ reflektieren den Effekt einer Erhöhung der Kovariate $x_k$ um eine Einheit (andere Eingangsgrössen konstant gehalten) und können als **Hazard Ratios (HR)** interpretiert werden.
+
+
+
+
+
+Wir haben oben die KM-Kurven für zwei Gruppen verglichen. Wir hatten dann nur einen kategorischen Prädiktor. Die alternative Analyse wäre ein Anpassen eines Cox-Models mit `coxph()`:
+
+```{r }
+m.cox1 <- coxph(Surv(time, status) ~ sex, data = lung)
+summary(m.cox1)
+```
+
+Wir erkennen im Output obigen Log-Rank-Test, einen Score-Test. Hier werden alle drei Tests gemacht, die wir im Zusammenhang mit der Likelihood-Inferenz eingeführt haben. Alle Tests sind praktisch äquivalent.
+
+
+Die geschätzte Hazard-Ratio ist `r exp(coef(m.cox1))`. Die Hazard, die **force of transition** ist für Männer um den Faktor `r exp(-coef(m.cox1))` grösser als bei Frauen und das diesbezügliche Konfidenzintervall überdeckt den Nulleffekt ($H_0: \mathrm{log} HR=0$ oder $HR=1$) nicht.
+
+
+
+Auch hier können wir zusätzliche kategorielle oder kontinuierliche Prädiktoren ins Modell aufnehmen. Wenn wir für `age` korrigieren, ändert sich der Effekt von `sex` nicht substantiell. `age` konfundiert den `sex` Effekt auf survival nicht.
+
+```{r }
+m.cox <- coxph(Surv(time, status) ~ sex+age, data = lung)
+summary(m.cox)
+```
+
+
+
+
+### Link zur Poisson-Regression
+
+Das Poisson-Regressionmodell hatten wir für die **erwartete Rate**, die **erwarteten Zählwerte pro Personenzeit** geschrieben:
+
+$$
+\begin{aligned}
+\mathrm{log}(\mu_i) &= \underbrace{\mathrm{log}(T_i)}_{\text{Offset}} + \beta_0 + \beta_1x_i\\
+\mathrm{log}(\lambda_i) &= \beta_0 + \beta_1x_i
+\end{aligned}
+$$
+
+Nun ist auch $h_i$ eine Rate, also schreiben wir
+
+$$
+\mathrm{log}(h_i) = \beta_0 + \beta_1x_i
+$$
+
+und dann
+
+$$
+h_i = \underbrace{\exp(\beta_0)}_{h_0(t)} \exp(\beta_1x_i)
+$$
+
+
+In einer Poisson-Regression für Ereigniszahlen pro Zeit wird angenommen, dass die Basisrate (analog zur Baseline-Hazard) **konstant** ist, nämlich $\exp(\beta_0)$. Das Modell berücksichtigt nicht, dass sich Raten über die Zeit ändern können. Daher unterscheiden sich die Ergebnisse von einem Cox-Modell, das eine flexible Baseline-Hazard zulässt.
+
+
+```{r }
+lung$count <- lung$status - 1  
+glm(count ~ sex + offset(log(time)), data = lung, family = "poisson")$coef
+```

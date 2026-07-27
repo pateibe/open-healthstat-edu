@@ -1,0 +1,75 @@
+id,drug,walk6min_baseline,walk6min_post
+29,remdesivir,417,802
+4,remdesivir,367,677
+35,remdesivir,289,482
+18,remdesivir,407,778
+9,remdesivir,264,420
+13,remdesivir,403,767
+15,remdesivir,501,1012
+22,remdesivir,208,280
+21,remdesivir,367,678
+23,remdesivir,360,659
+2,remdesivir,409,781
+19,remdesivir,520,1059
+39,remdesivir,395,746
+31,remdesivir,242,364
+25,remdesivir,300,510
+27,remdesivir,358,655
+3,remdesivir,290,484
+40,remdesivir,362,664
+14,remdesivir,526,1074
+33,remdesivir,524,1069
+28,remdesivir,340,609
+5,remdesivir,456,900
+16,remdesivir,436,849
+17,remdesivir,332,589
+30,remdesivir,402,764
+11,remdesivir,537,1102
+36,remdesivir,283,468
+20,remdesivir,475,947
+38,remdesivir,251,387
+10,remdesivir,401,763
+12,remdesivir,503,1016
+7,remdesivir,306,525
+37,remdesivir,463,917
+32,remdesivir,419,807
+6,remdesivir,466,924
+1,remdesivir,429,832
+26,remdesivir,390,734
+47,no drug,624,1158
+53,no drug,335,481
+48,no drug,553,939
+71,no drug,378,727
+74,no drug,331,602
+52,no drug,455,874
+55,no drug,374,658
+59,no drug,430,763
+62,no drug,488,1113
+67,no drug,471,602
+80,no drug,455,678
+61,no drug,421,810
+63,no drug,445,849
+70,no drug,391,632
+46,no drug,396,808
+43,no drug,337,953
+75,no drug,402,711
+51,no drug,406,592
+49,no drug,485,780
+58,no drug,580,945
+69,no drug,468,659
+66,no drug,491,863
+65,no drug,497,940
+44,no drug,352,730
+41,no drug,430,863
+45,no drug,609,1130
+76,no drug,539,798
+68,no drug,413,459
+54,no drug,464,536
+79,no drug,428,649
+78,no drug,646,960
+60,no drug,424,879
+64,no drug,526,719
+42,no drug,493,801
+50,no drug,389,905
+77,no drug,471,771
+57,no drug,467,1026
