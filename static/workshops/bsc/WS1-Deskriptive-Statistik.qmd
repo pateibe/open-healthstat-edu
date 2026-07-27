@@ -1,0 +1,5 @@
+---
+title: "Angewandte Statistik Bachelor of Science"
+subtitle: "Workshop 1: Deskriptive Statistik"
+---
+

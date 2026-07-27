@@ -1,0 +1,573 @@
+```{r setup-06, include=FALSE}
+rm(list = ls())
+
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE, 
+                      message = FALSE,
+                      fig.align = "center",
+                      fig.dim = c(5, 4))
+
+library(openintro)
+library(tidyverse)
+library(knitr)
+library(patchwork)
+library(Hmisc)       # for errorbars in ggplot
+library(kableExtra)
+library(graphics)
+library(rio)
+library(mlbench)
+
+ggred <- "#F8766D"
+ggblue <- "#00BFC4"
+gggreen <- "#7CAE00"
+ggviolet <- "#C77CFF"
+
+```
+
+
+
+```{r echo=FALSE}
+#knitr::write_bib(c(.packages(), "openintro"), "packages.bib")
+```
+
+
+# Poisson Regression {#sec-poisson-regression}
+
+In @sec-inferenz-fuer-nominale-daten haben Sie erfahren, wie man  auf Grundlage von 2x2 Tabellen Odds und Odds Ratios, bzw. Risiken und Risk Ratios berechnet. In @sec-logistic-regression wurde erläutert, wie man Odds und Wahrscheinlichkeiten mit einem Regressionsansatz modellieren kann. 
+
+Weil die abhängige Variable $Y_i$ eine binäre Variable mit unterliegender Eintrittswahrscheinlichkeit $\pi_i$ (oder Anzahl Erfolge bei gruppierten Daten) war, verwendeten wir dafür die Binomialverteilung $Y_i\sim \mathcal{B}(1,\pi_i)$, zusätzlich zum linearen Prädiktor
+
+$$
+\mathrm{logit}(\pi_i) = \beta_0 + \beta_1x_{i1}+\dots+\beta_m x_{im}.
+$$
+
+Die **Link**-Funktion, die ermöglicht, dass der transformierte Erwartungswert und damit der lineare Prädiktor nicht mehr beschränkt ist, war dort die $\mathrm{logit}$-Funktion.
+
+In diesem Kapitel geht es nun darum, wie man **Anzahlen** oder **Raten** mit einem Regressionsansatz modelliert. In der Epidemiologie beschreibt eine Rate die Anzahl Events pro Personenjahr, z.B. die Anzahl neuer Krebsfälle pro 1000 Personenjahre. Anzahlen können nur ganzzahlige Werte annehmen. Für solche Zähldaten (= diskrete Variablen) wird oft eine Poissonverteilung angenommen, dies führt dann zur Poisson Regression. Diese findet also dann Anwendung, wenn die abhängige Variable die Anzahl von Ereignissen in einem festen Zeitraum (oder Raum) darstellt.
+
+In diesem Kapitel werden wir die Grundlagen der Poisson-Regression erkunden. Die Flexibilität dieser Modelle wird aufgezeigt, in dem mehrere Prädiktoren in ein Modell eingeschlossen werden. Der Fokus liegt auf der Anwendung (selbstständige Anpassung der Modelle in `R`) und der Interpretation. Mathematische Details werden soweit reduziert, wie möglich.
+
+
+## Notation
+
+ - $\mu$: erwartete Anzahl
+ - $T$: Beobachtungszeit (z.B. Personenjahre)
+ - $\lambda$: erwartete Rate
+ - $RR$: Rate Ratio, $IRR$: Incidence Rate Ratio
+ - $\mathcal{P}(\mu)$: Poisson-Verteilung mit Parameter $\mu$
+ - $\mathcal{B}(n,\pi)$: Binomialverteilung mit Parametern $n$ und $\pi$
+ - $\mathcal{N}(\mu,\sigma^2)$: Normalverteilung mit Parametern $\mu$ und $\sigma^2$
+ - $D$: Devianz
+  
+
+
+## Lernziele
+
+Beachten Sie im Folgenden die überaus wichtigen Rechenregeln bezüglich der $\log$ und $\exp$-Funktion. Sie werden uns auf Schritt und Tritt verfolgen:
+
+$$
+\begin{aligned}
+\log(a \times b) &= \log(a) + \log(b)\\
+\log(a /b) &= \log(a) - \log(b)\\
+\exp(a + b) &= \exp(a) \times \exp(b)\\
+\quad \exp(a-b) &= \exp(a)/\exp(b)
+\end{aligned}
+$$
+
+
+::: callout-important
+
+1.  Definieren Sie eine erwartete Anzahl Ereignisse für eine statistische Einheit $i$ als
+
+    $$
+    \mu_i = \lambda_i T_i,
+    $$
+
+    wobei $\lambda_i$ die Rate und $T_i$ die totale Beobachtungszeit dieser Einheit darstellt.
+
+
+2.  Wenden Sie eine Poisson Regression an, wenn anhand einer oder mehrerer Prädiktorvariablen die Rate $\lambda_i$ oder die Anzahl (Count) $\mu_i$ eines Ereignisses für eine Beobachtungsdauer $T_i$ geschätzt werden soll.
+
+
+
+3.  Modell für Anzahlen (counts): Der lineare Prädiktor ist gegeben durch    den log-transformierten Erwartungswert $\mu_i$,
+
+    $$
+    \boxed{\log(\mu_i) = \beta_0 + \beta_1x_{i1}+...+\beta_mx_{im},}
+    $$
+
+    und die Anzahlen $Y_i$ gehorchen einer Poissonverteilung mit Parameter $\mu_i$, 
+    
+    $$
+    \boxed{Y_i\sim \mathcal {P}(\mu_i).}
+    $$
+    
+    Die Poissonverteilung $\mathcal{P}(\mu)$	hat einen Parameter $\mu$. 	Beachten Sie, dass für die Poisson-Verteilung Mittelwert und Varianz gleich dem Parameter $\mu$ sind: $E(Y_i)=\mathrm{Var}(Y_i)=\mu_i$.
+	
+	
+4. Modell mit Offset:  Mit einem Offset-Term für die Beobachtungszeit $T_i$ haben wir für den linearen Prädiktor
+   
+    $$
+    \log(\mu_i) = \underbrace{\log(T_i)}_{\text{offset}}+\beta_0 + \beta_1x_{i1}+...+\beta_mx_{im},
+    $$
+    
+    das ist äquivalent mit
+	
+    $$
+    \boxed{\log(\lambda_i) = \beta_0 + \beta_1x_{i1}+...+\beta_mx_{im}.}
+    $$
+
+
+5.  Beachten Sie, dass eine Anzahl und eine Rate im Intervall [0, $\infty$) liegt, die $\log(\mu)$, bzw. $\log(\lambda)$ im Intervall ($-\infty$; $\infty$).
+
+6.  Berechnen Sie $\log(\hat{\lambda}_i)$ (oder $\log(\hat{\mu}_i)$) durch Einsetzen der geschätzten Regressionskoeffizienten $\hat{\beta}_k (k=0,\dots,m)$ sowie der Werte für die  Prädiktoren der Einheit $i$ in die Regressionsgleichung.
+
+7.  Interpretieren Sie $\beta_0$ (intercept) als die **log count** oder **log rate**, wenn alle unabhängigen Variablen den Wert 0 annehmen (und kategorielle Eingangsgrössen auf der Referenzkategorie sind). Diese Grösse ist meistens nicht von Interesse.
+
+8.  Interpretieren Sie die Effekte oder Steigungen $\beta_k$ ($k=1,\dots,m$) bezüglich einer Eingangsgrösse $x_k$ als **log Count Ratio** oder **log Rate Ratio**,
+
+$$
+\begin{aligned}
+\log(RR)=&\log(\mu_{x_k=a})-\log(\mu_{x_k=a-1}),\\ \log(RR)=&\log(\lambda_{x_k=a})-\log(\lambda_{x_k=a-1}),
+\end{aligned}
+$$
+	als den Unterschied der Rate (Anzahl) auf $\log$-Skala für zwei  Subpopulationen, die sich auf $x_k$ um eine Einheit unterscheiden, während die anderen unabhängigen Variablen konstant gehalten werden. Die Nullhypothesen sind dann meistens 
+	
+$$
+H_0: \beta_k = 0, \quad k=1,...,m.
+$$
+
+9.  Exponieren Sie $\log(RR)$, um entsprechende Rate Ratios zu interpretieren.
+
+10.  Beachten Sie, dass dass eine Rate Ratio im Intervall \[0, $\infty$) liegt, die $\log(RR))$ im Intervall ($-\infty$; $\infty$), also nicht beschränkt ist.
+
+11. Führen Sie eine Poisson Regression in `R` mit `glm()` durch und interpretiere die geschätzten Regressionskoeffizienten sowie deren inferenzstatistischen Angaben.
+
+12.  Beachten Sie, dass man im Falle der Poisson Regression mit der Maximimum-Likelihood Methode Likelihood Parameter geschätzt werden.
+
+13. Sie können zwei verschachtelte (nested) Poisson Regressionsmodelle in `R` mit einem Likelihood Ratio Test vergleichen, wobei die Nullhypothese der Aussage entspricht:
+$H_0$: Das reduzierte Modell ist richtig.
+
+
+:::
+
+## Anzahlen und Raten
+
+Eine erwartete Rate $\lambda_i$ für eine Einheit $i$ beschreibt die erwartete Anzahl Ereignisse $\mu_i$ pro totale Beobachtungszeit $T_i$, da
+
+$$
+\mu_i = \lambda_i \times T_i.
+$$
+
+Ein Beispiel dafür sind die Anzahl Stürze während einem halben Jahr. Dann wären alle $T_i$ identisch. In Studien wird die Beobachtungszeit häufig auf 100, 1000 oder sogar 100'000 Personenjahre normiert, je nachdem, wie oft ein Ereignis auftritt. Weil die Zeit ein fester Bestandteil der Formel ist, können Raten nur berechnet werden, wenn longitudinale Daten vorliegen. Diese stammen in der Regel aus:
+
+-   Kohortenstudien
+
+-   Interventionsstudien
+
+Weil für die Berechnung von $\lambda$ die Anzahl der Ereignisse $\mu$ durch Personenjahre $T$ geteilt wird, kann man eine Rate auch dann berechnen, wenn die Beobachtungszeit nicht für alle Personen gleich ist. Wie wir technisch damit umgehen, sehen Sie weiter unten.
+
+Beispiel: 100 Personen, welche zu Beginn der Studie älter als 70 Jahre alt waren, wurden über einen Zeitraum von einem halben Jahr beobachtet und die Anzahl Stürze wurde gemessen. Insgesamt betrug die Beobachtungszeit 42 Personenjahre (einige haben die Studie abgebrochen). Es wurden 18 Stürze gemessen, somit ist $\hat{\lambda} =\frac{\hat{\mu}}{T}= \frac{18}{42} = 0.43$ Stürze pro Personenjahr, bzw. 43 Stürze pro 100 Personenjahre.
+
+In der Poisson-Regression gehen wir davon aus, dass die **Anzahl Ereignisse** eine diskrete Variable $Y_i$ ist und einer Poissonverteilung mit Parameter $\mu_i$ folgt. 
+
+
+```{r echo=FALSE,fig.dim=c(9,5)}
+#| label: fig-pois
+#| fig.cap: "Poisson-Verteilung mit $\\mu=2,3,4$ und $\\mu=10$"
+par(mfrow=c(2,2))
+x<-0:20
+lambda<-c(2,3,4,10)
+for (i in 1:4){
+    h <- dpois(x,lambda=c(lambda[i]))
+barplot(h,names.arg=x,ylab="Masse")
+}
+```
+
+
+
+Wir notieren kurz
+
+$$
+Y_i\sim \mathcal{P}(\mu_i),
+$$
+
+wenn die $Y_i$ Poisson-verteilt sind gemäss
+
+$$
+p(y)=\frac{\mu^y}{y!}\exp(-\mu),\quad y=0,1,2,\dots .
+$$
+
+Diese Verteilung ist in `R` implementiert in `dpois()`. 
+
+Für die Poissonverteilung gilt, dass Erwartungswert und Varianz identisch sind, nämlich gleich dem Parameter $\mu$.
+
+$$
+\mathbb{E}(Y)=\mathrm{Var}(Y)=\mu.
+$$
+
+Das heisst, die Varianz **wächst mit dem Erwartungswert**, im Gegensatz zur Normalverteilung, dort ist $\sigma^2$ unabhängig vom Erwartungswert. 
+
+```{r}
+X<-rpois(n=10000,lambda=4);c(mean=mean(X),var=var(X))
+X<-rpois(n=10000,lambda=8);c(mean=mean(X),var=var(X))
+```
+
+Bei Poisson-Daten führt ein grösserer Mittelwert automatisch zu grösserer Streuung. Beim Anpassen von Modellen werden wir also später das Argument `family = poisson` festlegen müssen. Bei der logistischen Regression war die Einstellung `family = binomial`. 
+
+
+## Rückblick
+
+In der linearen Regression mit kontinuierlicher abhängiger Variable war das Modell $Y_i=\beta_0 + \beta_1x_{i1}+\dots+\beta_mx_{im}+\epsilon_i$ mit $\epsilon_i \sim \mathcal{N}(0,\sigma^2)$, kurz:
+
+::: callout-note
+## Lineare Regression
+
+
+$$
+\mu_i=\beta_0 + \beta_1x_{i1}+\dots+\beta_mx_{im}, \qquad  Y_i\sim \mathcal{N}(\mu_i,\sigma^2)
+$$
+
+:::
+
+In der linearen Regression musste der Erwartungswert $\mu_i$ nicht transformiert werden.
+
+In der logistischen Regression brauchten wir die logit (=logOdds)-Funktion für die Transformation des Erwartungwerts $\pi_i$. Der lineare Prädiktor und die Verteilung waren
+
+::: callout-note
+
+## Logistische Regression
+
+
+$$
+\mathrm{logit}(\pi_i)=\beta_0 + \beta_1x_{i1}+\dots+\beta_mx_{im}, \qquad Y_i\sim \mathcal{B}(\pi_i,1)
+$$
+  
+:::
+
+Bei aggregierten Daten haben wir statt der Bernoulli $\mathcal{B}(\pi_i,1)$ allgemein eine Binomialverteilung $\mathcal{B}(\pi_i,n)$. Mit der logit-Funktion $\log(Odds)$ konnten wir den Erwartungswert (eine Wahrscheinlichkeit) auf die ganze reelle Zahlenachse $[-\infty,+\infty]$ abbilden. Wir nennen den mit der Link-Funktion transformierten Erwartungswert den linearen Prädiktor.
+Mit der logistischen Funktion kam man zurück zum Erwartungswert,
+
+$$
+\pi_i=\frac{\exp(\beta_0+\beta_1x_{i1}+\dots+\beta_mx_{im})}{1+\exp(\beta_0+\beta_1x_{i1}+\dots+\beta_mx_{im})}.
+$$
+
+Wenn wir für den linearen Prädiktor $\exp(\beta_0+\beta_1x_{i1}+\dots+\beta_mx_{im})$ kurz $\eta_i$ schreiben, haben wir kürzer 
+
+$$
+\pi_i=\frac{\exp(\eta_i)}{1+\exp(\eta_i)}.
+$$
+
+## Poisson Regression {#sec-poisson-regression2}
+
+Jetzt zur Poisson-Regression: Nun sind erwartete Anzahlen oder Raten (Anzahlen pro Personenjahr) positive Zahlen. Die $\log$-Funktion bildet positive Zahlen auf $(-\infty,+\infty)$ ab. In der Poisson-Regression wird daher für die Transformation des Erwartungswertes $\mu$ die $\log$-Funktion gebraucht. Das Modell (linearer Prädiktor und Verteilung) ist dann
+
+::: callout-important
+## Linearer Prädiktor und Verteilung
+
+
+$$
+\log(\mu_i)=\beta_0 + \beta_1x_{i1}+\dots+\beta_mx_{im}, \qquad Y_i\sim \mathcal{P}(\mu_i)
+$$
+
+:::
+
+
+::: callout-important
+## Erwartungswert
+
+$$
+\mu_i=\exp(\beta_0 +\beta_1x_{i1}+\dots+\beta_mx_{im})=\exp(\beta_0)\exp(\beta_1x_{i1})\dots\exp(\beta_mx_{im}).
+$$
+
+::: 
+
+
+Schätzen der Parameter: Da wir die wahren $\beta$'s nicht kennen, schätzen wir diese wie immer anhand von Stichprobendaten. Das macht `glm()` für uns mit der Maximum-Likelihood-Methode, wir haben dann
+
+$$
+\log(\hat{\mu}_i) = \hat{\beta}_0 + \hat{\beta}_1x_{i1}+\dots+\hat{\beta}_mx_{im}
+$$
+
+und folglich
+
+$$
+\hat{\mu}_i= \exp(\hat{\beta}_0 + \hat{\beta}_1x_{i1}+\dots+\hat{\beta}_mx_{im})
+$$
+
+Um Raten anzupassen, brauchen wir die Beobachtungszeit pro Einheit $T_i$ als Variable im Datensatz. Diese Zeit kann in z.B. Tagen, Monaten oder Jahren vorliegen. Manchmal liegen auch nur Start- und Enddatum der Beobachtungszeit vor, man muss dann die Beobachtungszeit zuerst berechnen.
+
+Wir schreiben dann den linearen Prädiktor 
+
+$$
+\log(\mu_i)=\beta_0 + \beta_1x_{i1}+\dots+\beta_mx_{im}+\log(T_i),
+$$ 
+oder kurz 
+
+$$
+\log(\lambda_i)=\log(\mu_i/T_i)=\beta_0 + \beta_1x_{i1}+\dots+\beta_mx_{im}.
+$$
+
+Der letzte Term heisst **offset** und ist definiert als eine Eingangsgrösse ohne zu schätzenden Parameter (dieser ist fixiert auf 1).
+
+
+::: callout-note
+
+## Offset-Term versus Rate als abhängige Variable
+Achtung: Die $Y_i$ sind immer noch $\mathcal{P}(\mu_i)$, **nicht**  $\mathcal{P}(\lambda_i)$. Man darf also nicht direkt $Y_i/T_i$ modellieren, das wäre keine Poisson-Regression mehr.
+
+::::
+
+
+## Beispiel
+
+Wir betrachten folgende Daten: 34 Beobachtungen zu 5 Schiffstypen in 4 Baujahren und 2 Betriebsperioden:
+
+- `type` Ein Faktor mit den Levels „A“ bis „E“ für die verschiedenen Schiffstypen.
+- `construction` Ein Faktor mit den Levels „1960-64“, „1965-69“, „1970-74“, „1975-79“ für die Bauperioden.
+- `operation` Ein Faktor mit den Levels „1960-74“, „1975-79“ für die Betriebsperioden.
+- `service` Die aggregierten Betriebsmonate.
+- `incidents` Die Anzahl der Schadensvorfälle.
+
+
+```{r }
+library(AER)
+data("ShipAccidents")
+df.sa <- subset(ShipAccidents, service > 0)##ohne die Fälle, die nie in Betrieb waren
+```
+
+`str()` ist immer sinnvoll, bevor wir mit Daten arbeiten, ebenso die Betrachtung von ein paar Zeilen des Datensatzes:
+
+
+```{r }
+str(df.sa)
+```
+
+```{r }
+psych::headTail(df.sa)
+```
+
+Hier wäre `incidents` die abhängige ganzzahlige Variable, `type`, `construction` und `operation` unabhängige Variablen, alles kategorielle Variablen, `service` die Zeit in Monaten, während der die Ereignisse gezählt werden. Es scheint offensichtlich, dass  `service` berücksichtigt werden muss.
+
+### Deskriptive Statistik
+
+```{r }
+summary(df.sa)
+```
+
+
+```{r fig.dim=c(9,5)}
+#| label: fig-plot-desc-inc-service
+#| fig-cap: "Incidens/service by type, construction and operation"
+
+
+par(mfrow=c(1,3))
+with(df.sa, plot(incidents/service ~ type))
+with(df.sa, plot(incidents/service ~ construction,las=2))
+with(df.sa, plot(incidents/service ~ operation))
+
+```
+
+
+## Nicht-reduziertes Modell
+
+Da die Anzahlen `incidents` nur in Bezug zu den Betriebsmonaten `service` Sinn machen, integrieren wir einen Offset Term. Wir passen zuerst direkt ein multiples Modell an mit `type`, `construction` und `operation` als Eingangsgrössen. 
+
+Das `family`-Argument ist jetzt `poisson` mit $\log$-Link. Der $\log$-Link ist der Default-Link bei Poisson Daten (so wie es der $\mathrm{logit}$-Link bei der logistischen Regression war). Das offset-Argument ist `log(service)` (mit $\log$!).
+
+Die Syntax ist dann:
+
+```{r }
+m.pois.large <- glm(incidents ~ type +  construction + operation +offset(log(service)),
+                    family = poisson(link="log"),data = df.sa)
+```
+
+Schauen wir uns das angepasste Modell an:
+
+```{r }
+summary(m.pois.large)
+```
+
+Eine kategorielle Eingangsgrösse mit $k$ Stufen fliesst mit $k-1$ Parametern in ein Modell ein, wobei in der `R`-Effekt-Parameterisierung der Parameterwert der Referenzkategorie immer Null gesetzt wird. Also hat unser Modell $p=1+(5-1)+(4-1)+(2-1)= 9$ Parameter. 
+
+Die Residualdevianz ist gleich 
+
+$$
+D_R=-2(l(\mathbf{\hat\beta})-l_{max})=`r deviance(m.pois.large)`
+$$
+mit $l_{max}$ als der log-likelihood des maximalen Modells (ein Modell mit einem Parameter für jede Beobachtung $i$, also der bestmögliche Fit) und $l(\mathbf{\hat\beta})$ als der log-likelihood vom MLE. 
+
+Die Null Deviance ist $D_0=-2(l_0-l_{max})=`r m.pois.large$null.deviance`$ mit $l_0$ als der log-likelihood für das Null model (Ein Modell nur mit dem Intercept). 
+
+Der Unterschied in der Anzahl Parametern zwischen dem maximalen Modell und diesem Modell ist $n-9=`r dim(df.sa)[1]`-9=25$.
+
+
+## Reduzierte Modelle
+
+Mit `drop1` können wir für verschiedene Eingangsgrössen testen, ob sie aus dem Modell entfernt werden können. 
+
+```{r }
+drop1(m.pois.large,test="Chisq")
+```
+
+Diese Funktion macht z.B. bezüglich `operation` folgenden Modellvergleich:
+
+```{r }
+m.pois.noop<-update(m.pois.large,.~.-operation)
+anova(m.pois.noop,m.pois.large)
+```
+
+Wiederholen wir diesen Modellvergleich von Hand. Der Unterschied in Devianz zwischen dem reduzierten ($H_0$-Modell, "small") und dem geschätzten vollen Modell ("large")
+
+$$
+\begin{aligned}
+D_{small}-D_{large}&=-2(l_{small}-l_{saturated})-(-2(l_{large}-l_{saturated}))\\
+&=-2(l_{small}-l_{large})
+\end{aligned}
+$$
+
+ist, wie wir schon gesehen haben  $\chi^2$-verteilt ist mit $p_{large}-p_{small}$ Freiheitsgraden.
+
+
+```{r }
+(dl<-deviance(m.pois.large)) #deviance large model
+(ds<-deviance(m.pois.noop))  #deviance reduced model
+(LR<-ds-dl)                  #Likelihood Ratio statistik
+1-pchisq(LR,1)               #p-value
+```
+
+
+Wir können die Nullhypothese, dass das reduzierte Modell wahr ist, verwerfen. Das gleiche gilt für die anderen Modellvergleiche. Wir bleiben daher beim nicht reduzierten Modell und können nun die Parameter interpretieren.
+
+Die Schätzungen sind (ausser das Intercept) als **log Rate Ratio** zu interpretieren. Diesbezügliche Likelihood-Konfidenzintervalle bekämen wir wieder mit 
+
+```{r results="hide"}
+confint(m.pois.large)
+```
+
+Eine Darstellung des angepassten Modells mit Likelihood-Konfidenzintervallen und Wald Tests bekommen wir wieder mit `parameters()` aus dem gleichnamigen Packet:
+
+```{r }
+parameters::parameters(m.pois.large,digits=3)
+```
+
+
+Das Intercept $\hat{\beta}_0$ ist die geschätzte log Rate, wenn alle Eingangsgrössen auf der Referenzkategorie sind. Das können wir mit `predict()` nachvollziehen, müssen dort aber für `service=1` setzen, damit `log(service)`=0. 
+
+```{r }
+predict(m.pois.large,
+        newdata=data.frame(type="A",construction="1960-64",operation="1960-74",service=1))
+```
+	
+Der geschätzte Parameter `type[B]` ist der Unterschied in $\log$-Rate relativ zu `type[A]`, wenn man die anderen Eingangsgrössen konstant hält, usw.
+
+Mit Exponieren kommen wir zu den Rate Ratios (oder auch Incidence Rate Ratios), Negative $\log$-Raten werden zu Rate Ratios kleiner 1, positive $\log$-Rate werden zu Rate Ratios grösser als 1:
+
+```{r }
+parameters::parameters(m.pois.large,digits=3,exponentiate=TRUE)
+```
+
+$IRR$ steht hier für **Incidence Rate Ratio**. So hat z.B. `type[C]` die Hälfte der Ereignisrate von `type[A]` mit einer geschätzten Rate Ratio von `r exp(coef(m.pois.large)[3])` mit einem 95% KI, dass den Nulleffekt 1 nicht überdeckt und somit haben wir auch $P<0.05$. 
+
+
+
+## Kontraste
+
+Bei kategoriellen Eingangsgrössen haben wir in der `R`-Effektparameterisierung immer die Effekte relativ zur Referenzkategorie. Oft interessieren aber auch andere Effekte, die nicht direkt in der Default-Parameterisierung ersichtlich sind. 
+
+Kontraste sind **Linearkombinationen von Parametern** mit der Bedingung, dass die Summe der Koeffizienten Null ist. Mit Konstanten $a_1,a_2,\dots,a_t$ und Parametern $\theta_1,\theta_2,\dots,\theta_t$ ist ein Kontrast 
+
+$$
+  L=\sum_{i=1}^ta_i\theta_i, \qquad \mathrm{mit} \sum_{i=1}^ta_i=0.
+$$
+
+**Beispiel**: So wäre für obiges Modell der Kontrast mit $a_1=0,a_2=0,a_3=0,a_4=-1,a_5=1,a_6=0,a_7=0,a_8=0,a_9=0$ der Abstand in $\log$-Rate oder Rate Ratio zwischen `type[E]` und `type[D]`, also der Effekt $\beta_5-\beta_4$. Der entsprechende Schätzwert ist `r summary(m.pois.large)$coef[5,1]-summary(m.pois.large)$coef[4,1]`.
+
+Kontraste werden konstruiert, um spezifische Forschungsfragen zu beantworten. Das ist implementiert in `emmeans()` aus dem gleichnamigen Packet (Estimated marginal means). Wir bekommen dann z.B. alle paarweisen Kontraste bezüglich `type` mit Punktschätzung, Standardfehler, Intervallschätzung, $z$-Statistik und $p$-Werten mit
+
+
+```{r }
+library(emmeans)
+emmeans(m.pois.large,revpairwise~type,infer=TRUE,offset=0)
+```
+
+Damit wir für die `emmeans`'s Raten haben statt Anzahlen, müssen wir `offset=0` schreiben. Wenn wir Rate Ratios wollen, setzen wir das Argument `type="response"`
+
+```{r }
+emmeans(m.pois.large,revpairwise~type,type="response",infer=TRUE,offset=0)
+```
+
+
+Hier wird auch automatisch für Multiples Testen korrigiert (mit der Tukey-Methode).
+
+
+```{r }
+mycontrasts<-emmeans(m.pois.large,revpairwise~type,type="response",infer=TRUE)
+plot(mycontrasts$contrasts)
+```
+
+Hier sehen wir schön, welche Kontraste statistisch signifikant vom Nullwert verschieden sind, $B-A$, $E-C$ und $E-B$.
+
+
+## Vorhersage
+
+Wie in den letzten Kapiteln können wir für spezifische Werte der Eingangsgrössen der Einheit $i$ und den geschätzten Parametern mit 
+
+
+$$
+\log(\hat{\lambda}_i)=\hat{\beta}_0+\hat{\beta}_1x_{i1}+\dots+\hat{\beta}_mx_{im}
+$$
+
+und dann mit 
+
+$$
+\hat{\lambda}_i=\exp(\hat{\beta}_0+\hat{\beta}_1x_{i1}+\dots+\hat{\beta}_mx_{im})
+$$
+
+die Ereignisrate für Einheit $i$ abschätzen. Das macht auch `R` für uns, mit `emmeans::emmip()`
+
+
+
+```{r }
+#| layout-ncol: 2
+emmip(m.pois.large,construction~type|operation,
+      offset=0,CIs=TRUE)
+
+emmip(m.pois.large,construction~type|operation,type="response",
+      offset=0,CIs=TRUE)
+```
+
+oder tabellarisch
+
+```{r }
+emmip(m.pois.large,construction~type|operation,type="response",
+      offset=0,CIs=TRUE,plotit=FALSE)
+```
+
+
+
+## Übergrosse Streuung*
+
+
+Oft ist die Poisson-Annahme $\mathrm{Var}(Y_i)=\phi \mu_i$ mit $\phi=1$ nicht erfüllt.
+
+
+Die Residualdevianz (hier `r deviance(m.pois.large)`) folgt einer $\chi^2$-Verteilung mit $n-p$ Freiheitsgraden (hier `r dim(df.sa)[1]-9`). Nun ist der Erwartungswert einer $\chi^2$-Verteilung gerade gleich dem Freiheitsgrad. Der Erwartungswert dieser Verteilung ist also $\mathbb{E}(\chi^2_{n-p})=n-p=25$. Wenn also die Residualdevianz deutlich grösser als die Freiheitsgrade ist, haben wir Overdispersion oder übergrosse Streuung. Das war in unserem Modell oben nicht der Fall.
+
+Man kann übergrosse Dispersion auch explizit testen, z.B. mit `AER::dispersionstest()`. Die Nullhypothese lautet "keine übergrosse Streuung".
+
+```{r }
+AER::dispersiontest(m.pois.large)
+```
+
+Bei übergrosser Streuung wird manchmal ein **Quasi-Poisson Modell** angepasst. Der Skalenparameter $\phi$ wird dann aus den Daten geschätzt und dann werden die Standardfehler mit $\sqrt{\phi}$ multipliziert. Quasi-Modelle haben dann grössere Standardfehler, aber gleiche Punktschätzungen.
+
+
+```{r }
+m.pois.largeQuasi <- glm(incidents ~ type +  construction + operation +
+                           offset(log(service)), family = quasipoisson,data = df.sa)
+
+summary(m.pois.largeQuasi)$coef
+```
+
+Eine weitere Option für Zähldaten mit übergrosser Streuung ist das **Negative-Binomial Modell**, auf das wir hier nicht eingehen.

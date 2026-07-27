@@ -1,0 +1,151 @@
+f_age,m_age,weeks,premature,visits,gained,weight,sex_baby,smoke
+31,30,39,full term,13,1,3121,male,smoker
+34,36,39,full term,5,35,3488,male,nonsmoker
+36,35,40,full term,12,29,4028,male,nonsmoker
+41,40,40,full term,13,30,4082,female,nonsmoker
+42,37,40,full term,NA,10,3602,male,nonsmoker
+37,28,40,full term,12,35,3742,male,smoker
+35,35,28,premie,6,29,739,female,nonsmoker
+28,21,35,premie,9,15,2495,female,smoker
+22,20,32,premie,5,40,1220,male,smoker
+36,25,40,full term,13,34,3969,female,nonsmoker
+27,19,32,premie,5,32,2948,female,nonsmoker
+35,34,40,full term,15,20,3375,male,nonsmoker
+25,19,41,full term,13,47,3801,male,smoker
+36,33,38,full term,10,20,2722,male,nonsmoker
+27,27,39,full term,11,5,3543,male,smoker
+24,23,38,full term,13,22,3543,female,nonsmoker
+33,40,36,premie,13,23,3543,female,nonsmoker
+NA,23,40,full term,10,30,3316,male,nonsmoker
+28,27,33,premie,6,18,2155,male,smoker
+25,22,34,premie,10,20,1701,male,nonsmoker
+35,31,37,full term,12,37,3656,female,nonsmoker
+NA,38,32,premie,10,16,993,female,smoker
+NA,26,42,full term,15,30,3348,male,smoker
+29,30,39,full term,10,43,3121,female,nonsmoker
+24,22,40,full term,16,34,3121,female,smoker
+25,25,38,full term,19,13,3461,female,nonsmoker
+34,33,43,full term,13,25,4141,male,smoker
+NA,20,39,full term,15,70,3348,female,smoker
+NA,28,37,full term,13,35,3742,female,nonsmoker
+28,26,39,full term,15,45,3261,female,nonsmoker
+27,27,39,full term,14,31,3429,female,nonsmoker
+NA,21,36,premie,15,10,3089,male,nonsmoker
+NA,24,38,full term,16,50,1701,female,nonsmoker
+NA,25,38,full term,11,27,3969,male,nonsmoker
+33,30,37,full term,10,57,2976,male,nonsmoker
+27,25,40,full term,11,26,3375,male,nonsmoker
+NA,25,39,full term,5,37,2722,female,smoker
+29,21,39,full term,18,13,3515,female,nonsmoker
+33,30,39,full term,9,42,3543,male,smoker
+NA,24,39,full term,6,30,2781,female,smoker
+NA,23,42,full term,9,22,3996,male,nonsmoker
+29,26,39,full term,14,65,3515,female,smoker
+35,28,38,full term,10,25,3121,male,nonsmoker
+27,22,35,premie,12,30,2127,male,nonsmoker
+33,25,35,premie,15,18,3062,male,nonsmoker
+27,22,39,full term,12,30,3148,female,smoker
+30,25,35,premie,15,40,2041,male,smoker
+NA,23,44,full term,4,55,3688,female,smoker
+21,22,40,full term,10,85,2635,male,nonsmoker
+NA,32,37,full term,8,30,3089,female,nonsmoker
+34,34,38,full term,11,23,3289,male,nonsmoker
+22,22,39,full term,14,29,3261,female,nonsmoker
+35,31,40,full term,10,45,3629,female,nonsmoker
+25,26,39,full term,12,40,3801,male,nonsmoker
+22,26,39,full term,12,31,3316,male,smoker
+22,34,39,full term,12,57,4395,male,nonsmoker
+40,40,38,full term,13,38,3316,male,nonsmoker
+24,18,37,full term,8,25,2808,male,smoker
+42,38,41,full term,15,35,4595,female,nonsmoker
+30,28,39,full term,13,0,3402,female,nonsmoker
+35,31,40,full term,15,32,2835,male,nonsmoker
+39,27,39,full term,12,58,3883,male,smoker
+28,18,41,full term,10,11,2948,female,nonsmoker
+29,29,44,full term,12,51,3856,male,nonsmoker
+28,24,39,full term,11,NA,3402,female,nonsmoker
+33,35,38,full term,10,20,2921,female,smoker
+29,31,36,premie,8,42,2694,male,smoker
+19,20,34,premie,13,6,2041,male,nonsmoker
+NA,19,39,full term,11,48,3801,female,smoker
+43,31,41,full term,5,20,3202,female,smoker
+33,27,41,full term,15,38,3175,male,smoker
+27,21,41,full term,8,26,2694,female,nonsmoker
+29,30,39,full term,15,44,2894,male,smoker
+NA,20,37,full term,10,26,2440,female,smoker
+NA,16,40,full term,4,12,2722,female,nonsmoker
+34,34,37,full term,17,35,3121,female,nonsmoker
+26,26,41,full term,10,68,4223,male,nonsmoker
+22,22,40,full term,13,0,2948,male,smoker
+31,32,38,full term,6,27,3062,female,nonsmoker
+39,37,38,full term,5,45,2327,male,nonsmoker
+NA,37,38,full term,3,NA,3402,male,smoker
+34,36,38,full term,4,25,3121,male,smoker
+NA,32,33,premie,10,60,2295,male,nonsmoker
+30,24,41,full term,12,40,3688,male,smoker
+30,29,39,full term,14,30,2440,male,nonsmoker
+27,24,40,full term,11,8,3488,female,nonsmoker
+NA,23,41,full term,14,19,3574,female,nonsmoker
+24,21,41,full term,13,40,3574,female,nonsmoker
+34,29,39,full term,15,24,3742,female,nonsmoker
+32,25,41,full term,13,50,3515,female,nonsmoker
+26,25,40,full term,10,25,3175,male,nonsmoker
+NA,41,33,premie,13,0,2581,female,nonsmoker
+26,23,42,full term,14,23,3062,male,nonsmoker
+25,34,41,full term,10,35,3715,female,nonsmoker
+24,19,40,full term,12,36,3715,male,nonsmoker
+35,31,39,full term,15,35,3375,male,nonsmoker
+35,36,38,full term,18,37,3742,male,nonsmoker
+28,25,40,full term,7,31,4169,male,nonsmoker
+34,31,40,full term,14,44,3402,female,nonsmoker
+35,33,40,full term,16,30,3089,male,nonsmoker
+30,25,40,full term,12,35,3688,male,nonsmoker
+26,20,41,full term,16,21,2862,female,smoker
+24,22,39,full term,12,32,3801,male,nonsmoker
+NA,26,38,full term,14,40,3629,male,smoker
+34,27,39,full term,16,24,4028,male,smoker
+NA,20,40,full term,17,39,4110,male,smoker
+26,17,38,full term,11,30,4309,female,nonsmoker
+NA,18,40,full term,12,13,3969,male,nonsmoker
+34,33,39,full term,10,40,3656,male,nonsmoker
+20,23,39,full term,15,56,3316,male,smoker
+21,16,38,full term,15,75,3429,female,smoker
+22,20,38,full term,8,45,3375,female,nonsmoker
+32,35,38,full term,17,55,3402,female,nonsmoker
+37,35,40,full term,16,32,3316,female,nonsmoker
+36,30,39,full term,11,21,3574,male,nonsmoker
+31,23,44,full term,14,40,3089,male,nonsmoker
+20,20,37,full term,12,22,2694,female,nonsmoker
+46,39,38,full term,10,35,3062,male,smoker
+23,25,37,full term,8,53,3488,female,nonsmoker
+28,21,38,full term,12,40,3348,male,nonsmoker
+25,19,40,full term,16,37,3602,male,smoker
+NA,24,39,full term,8,22,2268,female,smoker
+17,20,39,full term,16,35,2554,female,nonsmoker
+27,23,43,full term,15,30,3543,female,nonsmoker
+33,27,41,full term,14,58,3629,male,nonsmoker
+NA,18,33,premie,7,40,767,male,smoker
+26,23,38,full term,5,28,3261,female,nonsmoker
+37,33,36,premie,11,15,2862,male,smoker
+32,24,39,full term,8,23,3121,female,smoker
+24,22,42,full term,7,21,2948,female,nonsmoker
+17,17,29,premie,4,10,1193,female,nonsmoker
+18,15,37,full term,12,76,3828,male,nonsmoker
+24,20,41,full term,16,35,3261,male,nonsmoker
+NA,21,41,full term,12,32,3801,male,nonsmoker
+20,17,40,full term,17,38,3261,male,nonsmoker
+25,22,39,full term,12,27,2862,female,smoker
+33,33,38,full term,15,60,2976,male,nonsmoker
+23,21,40,full term,15,38,3461,female,nonsmoker
+36,28,39,full term,15,40,3801,male,nonsmoker
+31,29,41,full term,12,30,3488,male,smoker
+NA,23,36,premie,2,27,2667,female,nonsmoker
+NA,19,39,full term,7,0,3316,male,smoker
+47,24,40,full term,12,46,3121,male,nonsmoker
+NA,35,37,full term,10,25,2554,male,smoker
+30,29,38,full term,17,55,3175,female,nonsmoker
+NA,17,40,full term,15,20,3461,female,nonsmoker
+NA,37,39,full term,5,20,3715,female,smoker
+31,32,37,full term,12,22,2722,female,nonsmoker
+33,28,41,full term,10,30,3688,male,nonsmoker
+38,37,26,premie,5,25,1647,male,nonsmoker

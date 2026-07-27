@@ -1,0 +1,4 @@
+---
+title: "Angewandte Statistik Bachelor of Science"
+subtitle: "Workshop 5: Korrelation und Regression"
+---
