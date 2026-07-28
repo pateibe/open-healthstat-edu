@@ -1,5 +1,0 @@
----
-title: "Angewandte Statistik Bachelor of Science"
-subtitle: "Workshop: Intro Jamovi"
----
-

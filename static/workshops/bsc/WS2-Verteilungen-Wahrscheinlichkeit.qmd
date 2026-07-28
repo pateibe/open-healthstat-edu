@@ -1,4 +1,0 @@
----
-title: "Angewandte Statistik Bachelor of Science"
-subtitle: "Workshop 2: Verteilungen von Wahrscheinlichkeiten"
----

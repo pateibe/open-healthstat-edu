@@ -1,4 +1,0 @@
----
-title: "Angewandte Statistik Bachelor of Science"
-subtitle: "Workshop 3: Grundlagen Inferenzstatistik"
----
